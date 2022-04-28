@@ -20,7 +20,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\FindPairWithSumOfGivenNumber.csproj" />
+    <ProjectReference Include="..\..\FindPairWithSumOfGivenNumber\FindPairWithSumOfGivenNumber.csproj" />
   </ItemGroup>
+
+
+
+
+
 
 </Project>

@@ -6,7 +6,7 @@
             "type": "shell",
             "command": "dotnet build",
             "options": {
-                "cwd": "${workspaceFolder}/src/FindPairWithSumOfGivenNumber/src"
+                "cwd": "${workspaceFolder}/src/FindPairWithSumOfGivenNumber"
             }
         }
     ]

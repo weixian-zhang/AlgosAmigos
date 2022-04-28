@@ -9,16 +9,11 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "FindPairSumOfGivenNumber",
-            "program": "${workspaceFolder}/src/FindPairWithSumOfGivenNumber/src/bin/Debug/net5.0/FindPairWithSumOfGivenNumber.dll",
+            "program": "${workspaceFolder}/src/FindPairWithSumOfGivenNumber/bin/Debug/net5.0/FindPairWithSumOfGivenNumber.dll",
             "args": [],
             "cwd": "${workspaceFolder}/src/FindPairWithSumOfGivenNumber",
             "console": "internalConsole",
             "stopAtEntry": false
-        },
-        {
-            "name": ".NET Core Attach",
-            "type": "coreclr",
-            "request": "attach"
         }
     ]
 }
