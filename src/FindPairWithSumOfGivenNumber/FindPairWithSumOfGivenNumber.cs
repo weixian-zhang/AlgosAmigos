@@ -1,25 +1,26 @@
-﻿using System;
-using System.Collections;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using Xunit;
 
-namespace FindPairWithSumOfGivenNumber
-{
-    public class Program
+namespace SelectionSort;
+
+public class FindPairWithSumOfGivenNumber
     {
-        static void Main(string[] args)
-        {
-            // var nums = new [] {4, 9, 11, 17, 21, 34, 67, 78, 99};
-            // int sum = 55;
-            // var result = FindPairSum_Sorted_By_BinarySearch_RecusionVersion(nums, sum);
-            // Console.WriteLine(result.ToString());
+        // public void Main(string[] args)
+        // {
+        //     // var nums = new [] {4, 9, 11, 17, 21, 34, 67, 78, 99};
+        //     // int sum = 55;
+        //     // var result = FindPairSum_Sorted_By_BinarySearch_RecusionVersion(nums, sum);
+        //     // Console.WriteLine(result.ToString());
 
-            var nums = new [] {14, 9, 11, 71, 41, 34, 67, 78, 99, 86, 92, 0};
-            int sum = 92;
-            var result = FindPairWithSum_Unsorted_LinearLoop_StoreCompliments(nums, sum);
-            Console.WriteLine(result.ToString());
-        }
+        //     var nums = new [] {14, 9, 11, 71, 41, 34, 67, 78, 99, 86, 92, 0};
+        //     int sum = 92;
+        //     var result = FindPairWithSum_Unsorted_LinearLoop_StoreCompliments(nums, sum);
+        //     Console.WriteLine(result.ToString());
+        // }
 
-        public static Tuple<int, int> FindPairWithSum_Unsorted_LinearLoop_StoreCompliments(int[] nums, int sum)
+        public Tuple<int, int> FindPairWithSum_Unsorted_LinearLoop_StoreCompliments(int[] nums, int sum)
         {
             var complimentsHistory = new HashSet<int>();
 
@@ -48,7 +49,7 @@ namespace FindPairWithSumOfGivenNumber
             return new Tuple<int, int>(-1, -1);
         }
 
-        public static Tuple<int, int> FindPairWithSum_Sorted_HighLowCursorMeetInMiddle(int[] nums, int sum)
+        public Tuple<int, int> FindPairWithSum_Sorted_HighLowCursorMeetInMiddle(int[] nums, int sum)
         {
             int low = 0;
             int high = nums.Length - 1;
@@ -76,7 +77,7 @@ namespace FindPairWithSumOfGivenNumber
             return new Tuple<int, int>(-1, -1);
         }
 
-        public static Tuple<int, int> FindPairSum_Sorted_By_BinarySearch_RecusionVersion(int[] nums, int sum)
+        public Tuple<int, int> FindPairSum_Sorted_By_BinarySearch_RecusionVersion(int[] nums, int sum)
         {
              for(int i = 0; i < nums.Length; i++)
              {
@@ -97,7 +98,7 @@ namespace FindPairWithSumOfGivenNumber
              return new Tuple<int, int>(-1, -1);
         }
 
-        public static Tuple<int, int> FindPairSum_Sorted_By_BinarySearch_WhileLoopVersion(int[] nums, int sum)
+        public Tuple<int, int> FindPairSum_Sorted_By_BinarySearch_WhileLoopVersion(int[] nums, int sum)
         {
              for(int i = 0; i < nums.Length; i++)
              {
@@ -114,7 +115,7 @@ namespace FindPairWithSumOfGivenNumber
              return new Tuple<int, int>(-1, -1);
         }
 
-        private static int BinarySearchWhileLoop(int[] nums, int itemToFind)
+        private int BinarySearchWhileLoop(int[] nums, int itemToFind)
         {
 
                  int lowIndex = 0;
@@ -144,7 +145,7 @@ namespace FindPairWithSumOfGivenNumber
             return -1;
         }
 
-        private static int BinarySearchRecusion(int[] nums, int lowKey, int highKey, int numToFind)
+        private int BinarySearchRecusion(int[] nums, int lowKey, int highKey, int numToFind)
         {
             //first recusion run
             if(lowKey == 0 && highKey == 0) {
@@ -180,8 +181,7 @@ namespace FindPairWithSumOfGivenNumber
         }
 
         
-
-        private static int GetAverage(int num1, int num2)
+        private int GetAverage(int num1, int num2)
         {
             decimal avg = (num2 + num1) / 2;
             decimal roundDown = Math.Floor(avg);
@@ -190,4 +190,53 @@ namespace FindPairWithSumOfGivenNumber
             return result;
         }
     }
-}
+
+public class Test_FindPairWithSumOfGivenNumber
+ {
+        FindPairWithSumOfGivenNumber finder = new FindPairWithSumOfGivenNumber();
+
+        public Test_FindPairWithSumOfGivenNumber()
+        {
+
+        }
+
+        [Theory]
+        [InlineData(new [] {4, 9, 11, 17, 21, 34, 67, 78, 99}, 55)]
+        public void FindPairWithSum_Sorted_2Cursors_HighLowCursorMeetInMiddle(int[] nums, int sum)
+        {
+            var pair = finder.FindPairWithSum_Sorted_HighLowCursorMeetInMiddle(nums, sum);
+            
+            Debug.WriteLine(pair.ToString());
+        }
+
+
+        [Theory]
+        [InlineData(new [] {4, 9, 11, 17, 21, 34, 67, 78, 99}, 55)]
+        [InlineData(new [] {4, 9, 11, 17, 21}, 2)]
+        public void FindPairWithSum_Sorted_BinarySearch_SumMinusCurrentNumGetDifference_FindDifferenceInArray_Recusion(int[] nums, int sum)
+        {
+            var pair = finder.FindPairSum_Sorted_By_BinarySearch_RecusionVersion(nums, sum);
+
+            Trace.WriteLine(pair.ToString());
+        }
+
+        [Theory]
+        [InlineData(new [] {4, 9, 11, 17, 21, 34, 67, 78, 99}, 55)]
+        [InlineData(new [] {4, 9, 11, 17, 21}, 2)]
+        public void FindPairWithSum_Sorted_BinarySearch_SumMinusCurrentNumGetDifference_FindDifferenceInArray_WhileLoop(int[] nums, int sum)
+        {
+            var pair = finder.FindPairSum_Sorted_By_BinarySearch_WhileLoopVersion(nums, sum);
+
+            Trace.WriteLine(pair.ToString());
+        }
+
+        [Theory]
+        [InlineData(new [] {4, 9, 11, 17, 21, 34, 67, 78, 99}, 55)]
+        [InlineData(new [] {4, 9, 11, 17, 21}, 2)]
+        public void FindPairWithSum_UnSorted_LinearLoop_StoreCompliments(int[] nums, int sum)
+        {
+            var pair = finder.FindPairWithSum_Unsorted_LinearLoop_StoreCompliments(nums, sum);
+
+            Trace.WriteLine(pair.ToString());
+        }
+    }
