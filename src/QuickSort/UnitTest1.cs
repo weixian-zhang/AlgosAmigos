@@ -13,7 +13,8 @@ public class QuickerSorter
         if(result == null)
             result = new List<int>();
 
-        //base case: array reduced until 0 or 1
+        //base case: array size reduced until 0 or 1
+        // 0 means all values larger than pivot
         // this mean array contains single value either smallest or biggest as per recursion
         // as array size keep reducing
         if(nums.Length < 2) {
@@ -36,7 +37,12 @@ public class QuickerSorter
                 right.Add(nums[i]);
         }
 
-        
+        Console.WriteLine($"pivotValue: {pivotValue}");
+        Console.WriteLine($"nums: {string.Join(",", nums)}");
+        Console.WriteLine($"left: {string.Join(",", left)}");
+        Console.WriteLine($"right: {string.Join(",", right)}");
+        Console.WriteLine($"result: {string.Join(",", result)}");
+        Console.WriteLine("----------------------");
 
         //merge pivot value         
         Sort(left.ToArray());
