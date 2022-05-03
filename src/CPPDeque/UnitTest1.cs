@@ -36,17 +36,37 @@ public class DoubleEndedQueue<T> : IDeque<T>
         return _tail.Data;
     }
 
-    public void DnqueueHead(T data)
+    public void Dequeue()
     {
-        throw new System.NotImplementedException();
+        if(_head != null) {
+            
+            var prev = _head.Prev;
+
+            if(prev != null) {
+                _head = prev;
+                _head.Next = null;
+            }
+            else
+                _head = null;
+        }
     }
 
-    public void DnqueueTail(T data)
+    
+
+    public void DequeueTail()
     {
-        throw new System.NotImplementedException();
+        if(_tail != null) {
+            var next = _tail.Next;
+            if(next != null) {
+                _tail = next;
+                _tail.Prev = null;
+            }
+            else
+                _tail= null;
+        }
     }
 
-    public void EnqueueHead(T data)
+    public void Enqueue(T data)
     {
         var newNode = new Node<T>(data);
 
@@ -92,12 +112,21 @@ public class DoubleEndedQueue<T> : IDeque<T>
 
     public IEnumerator<T> GetEnumerator()
     {
-        throw new System.NotImplementedException();
+        if(_tail != null)
+            yield return _tail.Data;
+
+        var next = _tail.Next;
+        while(next != null) {
+            
+            yield return next.Data;
+
+            next = next.Next;
+        }
     }
 
     IEnumerator IEnumerable.GetEnumerator()
     {
-        throw new System.NotImplementedException();
+        return GetEnumerator();
     }
 
     public string ToString()
@@ -130,16 +159,51 @@ public class DoubleEndedQueue<T> : IDeque<T>
             prev = prev.Prev;
         }
     }
+
+    public void Dequeue(T data)
+    {
+        var node = Find(data);
+
+        if(node == null)
+            return;
+
+        var prev = node.Prev;
+        var next = node.Next;
+
+        if(prev != null)
+            prev.Next = next;
+
+        if(next != null)
+            next.Prev = prev;
+    }
+
+    public Node<T> Find(T data)
+    {
+        if(_head.Data.Equals(data))
+            return _head;
+
+        var prev = _head.Prev;
+
+        while(prev != null) {
+            if(prev.Data.Equals(data))
+                return prev;
+
+            prev = prev.Prev;
+        }
+        return null;
+    }
 }
 
 public interface IDeque<T> : IEnumerable<T>
 {
     public T PeekHead();
     public T PeekTail();
-    public void EnqueueHead(T data);
-    public void DnqueueHead(T data);
+    public void Enqueue(T data);
+    public void Dequeue();
+    public void Dequeue(T data);
     public void EnqueueTail(T data);
-    public void DnqueueTail(T data);
+    public void DequeueTail();
+    public Node<T> Find(T data);
 
     public string ToString();
 }
@@ -161,17 +225,12 @@ public class UnitTest1
 {
     DoubleEndedQueue<int> deque = new DoubleEndedQueue<int>();
 
-    public UnitTest1()
-    {
-
-    }
-
     [Theory]
     [InlineData(new int[] {1, 2, 3, 4, 5, 6})]
     public void Test_EnqueueHead(int[] nums)
     {
         foreach(int x in nums) {
-            deque.EnqueueHead(x);
+            deque.Enqueue(x);
         }
 
         Assert.True(deque.PeekHead() == 6);
@@ -186,12 +245,68 @@ public class UnitTest1
     public void Test_EnqueueTail(int[] nums)
     {
         foreach(int x in nums) {
-            deque.EnqueueHead(x);
+            deque.Enqueue(x);
         }
 
         deque.EnqueueTail(10);
 
         Assert.True(deque.PeekTail() == 10);
+
+        Console.WriteLine(deque.ToString());
+    }
+
+    [Theory]
+    [InlineData(new int[] {1, 2, 3, 4, 5, 6})]
+    public void Test_Enumerate(int[] nums)
+    {
+        foreach(int x in nums) {
+            deque.Enqueue(x);
+        }
+
+        //iterate over deque
+        foreach(int x in deque) {
+            Console.WriteLine(x.ToString());
+        }
+
+    }
+
+    [Theory]
+    [InlineData(new int[] {1, 2, 3, 4, 5, 6})]
+    public void Test_DequeueByHeadAndTail(int[] nums)
+    {
+        foreach(int x in nums) {
+            deque.Enqueue(x);
+        }
+
+        //remove 6
+        deque.Dequeue();
+        //remove 5
+        deque.Dequeue();
+        //remove 1
+        deque.DequeueTail();
+        //remove 2
+        deque.DequeueTail();
+        //remove 3
+        deque.DequeueTail();
+
+        Assert.True(deque.PeekHead() == 4);
+
+        Console.WriteLine(deque.ToString());
+    }
+
+    [Theory]
+    [InlineData(new int[] {1, 2, 3, 4, 5, 6})]
+    public void Test_DequeueByValue(int[] nums)
+    {
+        foreach(int x in nums) {
+            deque.Enqueue(x);
+        }
+
+        //remove 2, 4 and 5 which is in the moddle
+        deque.Dequeue(2);
+        deque.Dequeue(4);
+        deque.Dequeue(5);
+
 
         Console.WriteLine(deque.ToString());
     }
