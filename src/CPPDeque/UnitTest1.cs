@@ -112,15 +112,15 @@ public class DoubleEndedQueue<T> : IDeque<T>
 
     public IEnumerator<T> GetEnumerator()
     {
-        if(_tail != null)
-            yield return _tail.Data;
+        if(_head != null)
+            yield return _head.Data;
 
-        var next = _tail.Next;
-        while(next != null) {
+        var prev = _head.Prev;
+        while(prev != null) {
             
-            yield return next.Data;
+            yield return prev.Data;
 
-            next = next.Next;
+            prev = prev.Prev;
         }
     }
 
@@ -192,6 +192,20 @@ public class DoubleEndedQueue<T> : IDeque<T>
         }
         return null;
     }
+
+    public IEnumerable<T> ReverseEnumerate()
+    {
+        if(_tail != null)
+            yield return _tail.Data;
+
+        var next = _tail.Next;
+
+        while(next != null) {
+            yield return next.Data;
+
+            next = next.Next;
+        }
+    }
 }
 
 public interface IDeque<T> : IEnumerable<T>
@@ -204,6 +218,7 @@ public interface IDeque<T> : IEnumerable<T>
     public void EnqueueTail(T data);
     public void DequeueTail();
     public Node<T> Find(T data);
+    public IEnumerable<T> ReverseEnumerate();
 
     public string ToString();
 }
@@ -309,5 +324,22 @@ public class UnitTest1
 
 
         Console.WriteLine(deque.ToString());
+    }
+
+    [Theory]
+    [InlineData(new int[] {1, 2, 3, 4, 5, 6})]
+    public void Test_ReverseEnumerate(int[] nums)
+    {
+        foreach(int x in nums) {
+            deque.Enqueue(x);
+        }
+
+        foreach(int x in deque) {
+            Console.WriteLine(x);
+        }
+
+        foreach(int x in deque.ReverseEnumerate()) {
+            Console.WriteLine(x);
+        }
     }
 }
