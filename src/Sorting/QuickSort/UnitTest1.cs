@@ -5,15 +5,22 @@ public class UnitTest1
     [Fact]
     public void Test1()
     {
-        int[] numbers = CreateRandomArray(10);
 
-        var qs = new QuickSorter();
+        
 
-        Console.WriteLine(string.Join(", ", numbers));
+        // var swap = (int[,] array, int s, int e) => {
+        //     int temp = array[s,];
+        // };
 
-        qs.Sort(numbers);
+        // int[] numbers = CreateRandomArray(10);
 
-        Console.WriteLine(string.Join(", ", numbers));
+        // var qs = new QuickSorter();
+
+        // Console.WriteLine(string.Join(", ", numbers));
+
+        // qs.Sort(numbers);
+
+        // Console.WriteLine(string.Join(", ", numbers));
 
     }
 
