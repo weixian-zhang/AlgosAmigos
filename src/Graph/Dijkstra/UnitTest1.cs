@@ -92,21 +92,6 @@ public class Node
     public List<Node> Neighbours { get; set; } = new List<Node>();
 }
 
-
-public class Graph
-{
-
-    public List<Node> Nodes { get; set; } = new List<Node>();
-
-    public void Add(Node node, params Node[] neighbours)
-    {
-        if (neighbours != null && neighbours.Count() > 0)
-            node.Neighbours.AddRange(neighbours);
-
-        Nodes.Add(node);
-    }
-}
-
 public class DijkstraResult
 {
     public string Path { get; set; } = "";
