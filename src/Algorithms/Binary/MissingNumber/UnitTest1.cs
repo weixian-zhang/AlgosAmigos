@@ -5,6 +5,18 @@ public class UnitTest1
     [Fact]
     public void Test1()
     {
+        int a = 2;
+        int b = 3;
+
+        int or = a | b;
+        int ors = a | a;
+
+        int xor = a ^ b;
+        int xors = a ^ a;
+
+        int and = a & b;
+        int ands = a & a;
+
         var s = new Solution();
         int missing = s.MissingNumber(new int[] {6,4,2,3,5,7,0,9,8});
     }

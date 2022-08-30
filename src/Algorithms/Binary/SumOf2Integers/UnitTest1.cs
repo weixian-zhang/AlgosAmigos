@@ -9,7 +9,7 @@ public class UnitTest1
     {
 
         var s = new Solution();
-        int result = s.GetSum(13, 3);
+        int result = s.GetSum(5, 3);
         Console.WriteLine($"{result} - {Convert.ToString(result, 2)}");
     }
 
