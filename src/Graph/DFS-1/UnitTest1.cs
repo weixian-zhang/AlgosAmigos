@@ -24,7 +24,7 @@ public class UnitTest1
         g[5] = new List<TreeNode>() {new TreeNode(6),new TreeNode(7), new TreeNode(8)}; 
         g[6] = new List<TreeNode>() {}; 
         g[7] = new List<TreeNode>() {new TreeNode(5),new TreeNode(8)}; 
-        g[8] = new List<TreeNode>() {new TreeNode(5),new TreeNode(7)}; 
+        g[8] = new List<TreeNode>() {new TreeNode(2), new TreeNode(5),new TreeNode(7)}; 
         g[9] = new List<TreeNode>() {new TreeNode(3)}; 
         g[10] = new List<TreeNode>() {new TreeNode(3)}; 
 
