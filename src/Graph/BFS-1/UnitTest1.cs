@@ -6,25 +6,19 @@ public class UnitTest1
     public void Test1()
     {
         var g = new Dictionary<int, List<TreeNode>>();
-        g[0] = new List<TreeNode>() { new TreeNode(9),new TreeNode(7),new TreeNode(11)};
-        g[1] = new List<TreeNode>() {};
-        g[2] = new List<TreeNode>() { new TreeNode(12)};
-        g[3] = new List<TreeNode>() { new TreeNode(2),new TreeNode(4)};
-        g[4] = new List<TreeNode>() { };
-        g[5] = new List<TreeNode>() { };
-        g[6] = new List<TreeNode>() { new TreeNode(5)};
-        g[7] = new List<TreeNode>() { new TreeNode(3),new TreeNode(6)};
-        g[8] = new List<TreeNode>() { new TreeNode(1), new TreeNode(12)};
-        g[9] = new List<TreeNode>() { new TreeNode(10),new TreeNode(8)};
-        g[10] = new List<TreeNode>() { new TreeNode(1)};
-        g[11] = new List<TreeNode>() { };
-        g[12] = new List<TreeNode>() { };
+        g[1] = new List<TreeNode>() {new TreeNode(11), new TreeNode(6)};
+        g[11] = new List<TreeNode>() { new TreeNode(1), new TreeNode(10)};
+        g[10] = new List<TreeNode>() { new TreeNode(11), new TreeNode(5)};
+        g[5] = new List<TreeNode>() { new TreeNode(10), new TreeNode(7),new TreeNode(9) };
+        g[6] = new List<TreeNode>() { new TreeNode(9)};
+        g[7] = new List<TreeNode>() { new TreeNode(5),new TreeNode(8),};
+        g[8] = new List<TreeNode>() { new TreeNode(7),new TreeNode(9) };
+        g[9] = new List<TreeNode>() { new TreeNode(5),new TreeNode(6), new TreeNode(8) };
 
         var s = new Solution();
 
-        var path1 = s.BFS(g, new TreeNode(0));
-
-        var shortestPath = s.FindShortedPath(path1, 0 ,4);
+        var path1 = s.BFS(g, new TreeNode(1), 9);
+        var shortestPath = s.FindShortestPath(s.prevNodetracker, 1, 9);
     }
 }
 
@@ -32,7 +26,9 @@ public class Solution
 {
     Queue<int> _queue = new Queue<int>();
     private List<int> _visited = new List<int>();
-    public int[] BFS(Dictionary<int, List<TreeNode>>  graph, TreeNode node)
+    public Dictionary<int, int> prevNodetracker = new Dictionary<int, int>();
+
+    public int[] BFS(Dictionary<int, List<TreeNode>>  graph, TreeNode node, int end)
     {
         _queue.Enqueue(node.Label);
 
@@ -44,14 +40,25 @@ public class Solution
             if(!_visited.Contains(currentNode)){
                 _visited.Add(currentNode);
             }
-                
+
+            //end node found
+            if(currentNode == end)
+                break;
 
             if(graph.ContainsKey(currentNode))
             {
                 foreach(var neighbour in graph[currentNode] )
                 {
                     if(!_visited.Contains(neighbour.Label))
+                    {
                         _queue.Enqueue(neighbour.Label);
+
+                        //track parent node of next node, use to find shortest path later
+                        //[neighbour:parent, neighbour:parent, neighbour:parent]
+                        prevNodetracker[neighbour.Label] = currentNode;
+                    }
+
+                        
                 }
             }
         }
@@ -59,24 +66,26 @@ public class Solution
         return _visited.ToArray();
     }
 
-    public int[] FindShortedPath(int[] bfspath, int start, int end)
+    public int[] FindShortestPath(Dictionary<int,int> prevNodetracker, int start, int end)
     {
         var shortestPath = new List<int>();
 
-        int endOfPath = bfspath.Length - 1;
-        
-        for(int i = endOfPath; i >= 0; i--)
-        {
-            if(bfspath[i] == end)
-            {
-                shortestPath.Add(bfspath[i] );
-            }
+        shortestPath.Add(end);
+        int parent = prevNodetracker[end];
 
-            if(bfspath[i] == start)
-            {
-                shortestPath.Add(bfspath[i]);
-                break;
-            }
+        while(parent != -1)
+        {
+            shortestPath.Add(parent);
+
+            if(prevNodetracker.ContainsKey(parent))
+                parent = prevNodetracker[parent];
+            else
+                parent = -1;
+
+            //stop as first node of path = specified start
+            if(shortestPath[0] == start)
+                parent = -1;
+
         }
 
         shortestPath.Reverse();
