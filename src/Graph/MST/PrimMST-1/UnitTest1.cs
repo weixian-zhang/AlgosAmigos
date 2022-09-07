@@ -98,7 +98,7 @@ public class Node
 {
     public Node() {}
 
-    public Node(int label, int weight)
+    public Node(int label, int weight = 0)
     {
         Label = label;
         Weight = weight;
