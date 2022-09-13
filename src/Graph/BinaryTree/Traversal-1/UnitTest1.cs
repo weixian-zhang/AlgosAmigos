@@ -2,40 +2,47 @@ namespace Traversal_1;
 
 public class UnitTest1
 {
-    [Fact]
-    public void IsBST_True()
-    {
-        var a50 = new TreeNode(50);
-        var a35 = new TreeNode(35);
-        var a67 = new TreeNode(67);
-        var a20 = new TreeNode(20);
-        var a40 = new TreeNode(40);
-        var a11 = new TreeNode(11);
-        var a28 = new TreeNode(28);
-        
+    BinaryTree bt = new BinaryTree();
+    TreeNode a50 = new TreeNode(50);
+    TreeNode a35 = new TreeNode(35);
+    TreeNode a67 = new TreeNode(67);
+    TreeNode a20 = new TreeNode(20);
+    TreeNode a40 = new TreeNode(40);
+    TreeNode a11 = new TreeNode(11);
+    TreeNode a28 = new TreeNode(28);
+    
+    public UnitTest1()
+    {       
         a50.Left = a35;
         a50.Right = a67;
         a35.Left = a20;
         a35.Right = a40;
         a40.Left = a28;
+        a28.Left = a11;
+        
+        bt.Root = a50;
+    }
 
-        var bt = new BinaryTree();
+
+    [Fact]
+    public void IsBST_True()
+    {
+        a50.Left = a35;
+        a50.Right = a67;
+        a35.Left = a20;
+        a35.Right = a40;
+        a40.Left = a28;
+        
         bt.Root = a50;
 
         bool isItReallyBST = bt.IsBST();
+
+        Assert.True(isItReallyBST);
     }
 
     [Fact]
     public void IsBST_False()
-    {
-        var a50 = new TreeNode(50);
-        var a35 = new TreeNode(35);
-        var a67 = new TreeNode(67);
-        var a20 = new TreeNode(20);
-        var a40 = new TreeNode(40);
-        var a11 = new TreeNode(11);
-        var a28 = new TreeNode(28);
-        
+    {       
         a50.Left = a35;
         a50.Right = a35; //a67;
         a35.Left = a20;
@@ -46,14 +53,83 @@ public class UnitTest1
         bt.Root = a50;
 
         bool isItReallyBST = bt.IsBST();
+
+        Assert.False(isItReallyBST);
     }
 
-   
+   [Fact]
+   public void MinValue()
+   {
+        var min = bt.MinValue();
+   }
+
+   [Fact]
+   public void SearchNode_True()
+   {
+        var node = bt.Search(40);
+   }
+    
 }
 
 public class BinaryTree
 {
     public TreeNode Root { get; set; }
+
+    public TreeNode Search(int key)
+    {
+        var queue = new Queue<TreeNode>();
+
+        queue.Enqueue(Root);
+
+        while(queue.Count > 0)
+        {
+            var node = queue.Dequeue();
+
+            if(node.Value == key)
+                return node;
+
+            if(node.Left != null)
+                queue.Enqueue(node.Left);
+
+            if(node.Right != null)
+                queue.Enqueue(node.Right);
+            
+        }
+
+        return null;
+    }
+
+    public TreeNode MinValue()
+    {
+        TreeNode minNode = null;
+        int min = int.MaxValue;
+
+        var stack = new Stack<TreeNode>();
+
+        //DFS pre-order
+
+        stack.Push(Root);
+
+        while(stack.Count > 0)
+        {
+            var node = stack.Pop();
+
+            if(node.Value < min)
+            {
+                min = node.Value;
+                minNode = node;
+            }
+
+            if(node.Left != null)
+                stack.Push(node.Left);
+
+            if(node.Right != null)
+                stack.Push(node.Right);
+        }
+
+        return minNode;
+
+    }
 
     public int Depth()
     {

@@ -44,41 +44,7 @@ public class Codec {
     // Encodes a tree to a single string.
     public string serialize(TreeNode root) {
 
-        return DFS(root);
-
-        //BFS
-        // if(root == null)
-        //     return "";
-
-        // var result = new List<string>();
-
-        // _queue.Enqueue(root);
-
-        // while(_queue.Count > 0)
-        // {
-        //     var currentNode = _queue.Dequeue();
-
-        //     if(currentNode == null)
-        //     {
-        //         result.Add("null");
-        //         continue;
-        //     }
-        //     else
-        //         result.Add(currentNode.val.ToString());
-
-        //     if(currentNode.left != null)
-        //         _queue.Enqueue(currentNode.left);
-        //     else
-        //          _queue.Enqueue(null);
-
-        //     if(currentNode.right != null)
-        //         _queue.Enqueue(currentNode.right);
-        //     else
-        //          _queue.Enqueue(null);
-        // }
-
-        // return string.Join(",", result);
-        
+        return DFS(root);       
     }
 
     List<string> _result = new List<string>();
@@ -107,54 +73,6 @@ public class Codec {
         TreeNode root = deserializeRecursive(treeArr);
 
         return root;
-
-        //treeArr = treeArr.Where(x => x != "null").ToArray(); //no null 
-
-        // var nodemap = new Hashtable(); // node value to node, where node value is use to look up node
-
-        // foreach(string x in treeArr)
-        // {
-        //     if(x != "null")
-        //         nodemap[x] = null; //new TreeNode(Convert.ToInt32(x));
-        // }
-
-        // //formula to find parent = MAth.Floor((arr-index - 1) / 2)
-
-        // for(int i = 0; i < treeArr.Length; i++)
-        // {
-        //     if(treeArr[i] == "null")
-        //         continue;
-
-        //     var currentNodeValue = Convert.ToInt32(treeArr[i]);  //value is the key to node-map
-
-        //     if(nodemap[currentNodeValue] == null)
-        //         nodemap[currentNodeValue] = new TreeNode(currentNodeValue);
-
-        //     int parentIndex = (i - 1 ) / 2;
-
-        //     int valueOfParent = Convert.ToInt32(treeArr[parentIndex]);
-        //     if(nodemap[valueOfParent] == null)
-        //         nodemap[valueOfParent] = new TreeNode(valueOfParent);
-            
-        //     var parentNode = (TreeNode) nodemap[valueOfParent];
-
-        //     if(currentNodeValue != valueOfParent)
-        //     {
-        //         var currentNode = (TreeNode)nodemap[currentNodeValue];
-        //         if(parentNode.left == null)
-        //             parentNode.left = currentNode;
-        //         else
-        //             parentNode.right = currentNode;
-        //     }
-        // }
-
-        // int firstNodeValue = Convert.ToInt32(treeArr[0]);
-
-        // var root = (TreeNode)nodemap[firstNodeValue];
-
-        // return root;
-
-        //return deserializeRecursive(treeArr, 0);
     }
 
     private int nodeArrIndex = 0;
@@ -179,23 +97,6 @@ public class Codec {
         nodeArrIndex++;
 
         node.right = deserializeRecursive(arr);
-
-        // if(nodeArrIndex < arr.Length)
-        // {
-        //     var nodeVal = arr[nodeArrIndex];
-
-        //     if(nodeVal == "null")
-        //         return null;    //return null as node
-
-        //     int nodeValue = Convert.ToInt32(arr[nodeArrIndex]);
-
-        //     node = new TreeNode(nodeValue);
-
-        //     node.left = deserializeRecursive(arr, (2 * nodeArrIndex) + 1);
-
-        //     node.right = deserializeRecursive(arr, (2 * nodeArrIndex) + 2);
-
-        // }
         
         return node;
     }
