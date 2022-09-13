@@ -2,7 +2,7 @@ namespace Traversal_1;
 
 public class UnitTest1
 {
-    BinaryTree bt = new BinaryTree();
+    BinarySearchTree bt = new BinarySearchTree();
     TreeNode a50 = new TreeNode(50);
     TreeNode a35 = new TreeNode(35);
     TreeNode a67 = new TreeNode(67);
@@ -49,7 +49,6 @@ public class UnitTest1
         a35.Right = a40;
         a40.Left = a28;
 
-        var bt = new BinaryTree();
         bt.Root = a50;
 
         bool isItReallyBST = bt.IsBST();
@@ -71,9 +70,41 @@ public class UnitTest1
     
 }
 
-public class BinaryTree
+public class BinarySearchTree
 {
     public TreeNode Root { get; set; }
+
+    public TreeNode Add(int data)
+    {
+        if(Root == null)
+        {
+            Root = new TreeNode(data);
+            return Root;
+        }
+        
+        return AddInternal(Root, data);
+    }
+
+    private TreeNode AddInternal(TreeNode node, int data)
+    {
+        //base case
+        if(node == null)
+            node = new TreeNode(data);
+
+        
+        if(data == node.Value)
+            return node;
+
+        //recurse case
+        if(data < node.Value)
+        {
+            node.Left = AddInternal(node.Left , data);
+        }
+        else
+            node.Right = AddInternal(node.Right, data);
+
+        return node;
+    }
 
     public TreeNode Search(int key)
     {
@@ -99,6 +130,9 @@ public class BinaryTree
         return null;
     }
 
+    //just converted from BinaryTree to BinarySearchSearch
+    //below implementation can be improved by finding the left most node until Left=null
+    //to get the lowest value node
     public TreeNode MinValue()
     {
         TreeNode minNode = null;
