@@ -37,7 +37,7 @@ public class Solution
     
     
 
-    //returns minimim psanning tree adjacency List and cost
+    //returns minimum spanning tree adjacency List and cost
     public List<Node> PrimMST(Dictionary<Node, List<Node>> graph, int startNode, int totalNodes)
     {
         int edgeCount = 0;
