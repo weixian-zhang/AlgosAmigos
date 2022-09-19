@@ -6,29 +6,39 @@ public class UnitTest1
     public void Test1()
     {
         var bst = new BinarySearchTree();
-        // bst.Add(1);
-        // bst.Add(2);
-        // bst.Add(20);
-        // bst.Add(19);
-        // bst.Add(3);
-        // bst.Add(4);
-        // bst.Add(18);
-        // bst.Add(17);
-        // bst.Add(5);
+        bst.Add(80);
+        bst.Add(4);
+        bst.Add(2);
+        bst.Add(-1);
+        bst.Add(0);
+        bst.Add(14);
+        bst.Add(6);
+        bst.Add(9);
+        bst.Add(8);
+        bst.Add(13);
+        bst.Add(12);
+        bst.Add(15);
+        bst.Add(16);
         // bst.Remove(3);
         // bst.Remove(18);
 
-        bst.Add(0);
-        bst.Add(-2);
-        bst.Add(2);
-        bst.Add(-4);
-        bst.Add(-1);
-        bst.Add(3);
+        // bst.Add(0);
+        // bst.Add(-2);
+        // bst.Add(2);
+        // bst.Add(-4);
+        // bst.Add(-1);
+        // bst.Add(3);
 
-        bst.Remove(-2);
+        // bst.Remove(-2);
 
         // var smallestNode = bst.FindSmallest(bst.Root);
         // var largestNode = bst.FindLargest(bst.Root);
+
+        // Console.WriteLine(bst.PreorderTraversal());
+        // Console.WriteLine(bst.InorderTraversal());
+        // Console.WriteLine(bst.PostorderTraversal());
+
+        int height = bst.Height();
     }
 
 }
@@ -163,19 +173,67 @@ public class BinarySearchTree
         return _nodeCount;
     }
 
-    public string PreorderTraversal(int data)
+    public string PreorderTraversal()
     {
-        return "";
+        var nodesVisited = new List<int>();
+        PreorderTraversalInternal(Root, nodesVisited);
+        return string.Join(",", nodesVisited);
     }
 
-    public string InorderTraversal(int data)
+    private void PreorderTraversalInternal(TreeNode node, List<int> nodesVisited)
     {
-        return "";
+        if(node == null)
+            return;
+
+        nodesVisited.Add(node.Data);
+
+        if(node.Left != null)
+            PreorderTraversalInternal(node.Left, nodesVisited);
+
+        if(node.Right != null)
+            PreorderTraversalInternal(node.Right, nodesVisited);
     }
 
-    public string PostorderTraversal(int data)
+    public string InorderTraversal()
     {
-        return "";
+        var nodesVisited = new List<int>();
+        InorderTraversalInternal(Root, nodesVisited);
+        return string.Join(",", nodesVisited);
+    }
+
+    private void InorderTraversalInternal(TreeNode node, List<int> nodesVisited)
+    {
+        if(node == null)
+            return;
+
+        if(node.Left != null)
+            InorderTraversalInternal(node.Left, nodesVisited);
+
+        nodesVisited.Add(node.Data);
+
+        if(node.Right != null)
+            InorderTraversalInternal(node.Right, nodesVisited);
+    }
+
+    public string PostorderTraversal()
+    {
+        var nodesVisited = new List<int>();
+        PostorderTraversalInternal(Root, nodesVisited);
+        return string.Join(",", nodesVisited);
+    }
+
+    private void PostorderTraversalInternal(TreeNode node, List<int> nodesVisited)
+    {
+        if(node == null)
+            return;
+
+        if(node.Left != null)
+            PostorderTraversalInternal(node.Left, nodesVisited);
+
+        if(node.Right != null)
+            PostorderTraversalInternal(node.Right, nodesVisited);
+
+        nodesVisited.Add(node.Data);
     }
 
     public TreeNode FindSmallest(TreeNode node)
@@ -194,15 +252,56 @@ public class BinarySearchTree
         return FindLargest(node.Right);
     }
 
-    public bool SearchNode(int data)
+    public int Height()
     {
-        return false;
+        return HeightWhileLoop();
+        //return HeightRecurse(Root, 0, 0);
     }
 
-    public TreeNode GetSuccessor(TreeNode node)
+    public int HeightWhileLoop()
     {
-        return null;
+        TreeNode currentNode = Root;
+        int leftHeight = 0;
+        int rightHeight = 0;
+
+        while(currentNode != null)
+        {
+            if(currentNode.Left != null)
+            {
+                currentNode = currentNode.Left;
+                leftHeight++;
+            }
+            else if(currentNode.Right != null)
+            {
+                currentNode = currentNode.Right;
+                leftHeight++;
+            }
+            else
+                break;
+        }
+
+        if(rightHeight >= leftHeight)
+            return rightHeight;
+        else
+            return leftHeight;
     }
+
+    private int HeightRecurse(TreeNode node, int leftHeight, int rightHeight)
+    {
+        if(node == null)
+            return 0;
+
+        leftHeight = 1 + HeightRecurse(node.Left, leftHeight, rightHeight);
+
+        rightHeight = 1 + HeightRecurse(node.Right, leftHeight, rightHeight);
+
+        if( leftHeight >= rightHeight)
+            return leftHeight;
+        else
+            return rightHeight;
+    }
+
+
 }
 
 
