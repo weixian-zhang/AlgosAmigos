@@ -6,26 +6,36 @@ public class UnitTest1
     public void Test1()
     {
         var bst = new BinarySearchTree();
-        bst.Add(50);
-        bst.Add(45);
-        bst.Add(34);
-        bst.Add(20);
-        bst.Add(47);
+        // bst.Add(1);
+        // bst.Add(2);
+        // bst.Add(20);
+        // bst.Add(19);
+        // bst.Add(3);
+        // bst.Add(4);
+        // bst.Add(18);
+        // bst.Add(17);
+        // bst.Add(5);
+        // bst.Remove(3);
+        // bst.Remove(18);
 
-        bst.Add(67);
-        bst.Add(65);
-        bst.Add(75);
-        bst.Add(67);
-        bst.Add(81);
+        bst.Add(0);
+        bst.Add(-2);
+        bst.Add(2);
+        bst.Add(-4);
+        bst.Add(-1);
+        bst.Add(3);
 
-        var smallestNode = bst.FindSmallest(bst.Root);
-        var largestNode = bst.FindLargest(bst.Root);
+        bst.Remove(-2);
+
+        // var smallestNode = bst.FindSmallest(bst.Root);
+        // var largestNode = bst.FindLargest(bst.Root);
     }
 
 }
 
 public class BinarySearchTree
 {
+    int  _nodeCount = 0;
     public TreeNode Root { get; set; }
 
     public void Add(int value)
@@ -33,11 +43,13 @@ public class BinarySearchTree
         if(Root == null)
         {
             Root = new TreeNode(value);
+            _nodeCount++;
             return;
         }
 
         AddInternal(Root, value);
     }
+
     private void AddInternal(TreeNode node, int value)
     {
         if(node == null)
@@ -45,19 +57,23 @@ public class BinarySearchTree
 
         if(value < node.Data)
         {
+            //leftmost null is the smallest value
             if(node.Left == null)
             {
                 node.Left = new TreeNode(value);
+                _nodeCount++;
                 return;
             }
 
             AddInternal(node.Left, value);
         }
+        //right most null is the largest value
         else
         {
             if(node.Right == null)
             {
                 node.Right = new TreeNode(value);
+                _nodeCount++;
                 return;
             }
 
@@ -67,7 +83,84 @@ public class BinarySearchTree
 
     public void Remove(int data)
     {
+        RemoveInternal(Root, data);
+    }
 
+    public TreeNode RemoveInternal(TreeNode nodeToRemove, int value)
+    {
+        //node don't exist, value does not match any of node data
+        if(nodeToRemove == null)
+            return null;
+
+        //find node to remove
+        if(value == nodeToRemove.Data) //found node to remove
+        {
+            //leaf node with no children
+            if(nodeToRemove.Left == null & nodeToRemove.Right == null)
+            {
+                nodeToRemove = null;
+                return null;
+            }
+            //node with left child
+            else if(nodeToRemove.Left != null & nodeToRemove.Right == null)
+            {
+                //replace with left child
+                TreeNode leftChild = nodeToRemove.Left;
+                nodeToRemove = null;
+                _nodeCount--;
+                return leftChild;
+            }
+            //node with right child
+            else if(nodeToRemove.Left == null & nodeToRemove.Right != null)
+            {
+                TreeNode rightChild = nodeToRemove.Right;
+                nodeToRemove = null;
+                _nodeCount--;
+                return rightChild;
+            }
+            //node with both left and right children
+            else if(nodeToRemove.Left != null & nodeToRemove.Right != null)
+            {
+                //find left subtree largest value, just preference
+                //or also OK to find right subtree smallest
+
+                TreeNode leftChild = nodeToRemove.Left;
+
+                TreeNode largestNodeOfLeftSubTree = FindLargest(nodeToRemove);
+
+                largestNodeOfLeftSubTree.Left = leftChild;  //retain original left child
+
+                nodeToRemove = null;
+
+                _nodeCount--;
+
+                return largestNodeOfLeftSubTree;
+                
+            }
+            
+        }
+
+        //dig into left tree as value is > node
+        if(value < nodeToRemove.Data)
+        {
+            if(nodeToRemove.Left != null)
+                nodeToRemove.Left = RemoveInternal(nodeToRemove.Left, value);
+        }
+
+        //dig into right tree as value is > node
+        else
+        {
+            if(nodeToRemove.Right != null)
+                nodeToRemove.Right = RemoveInternal(nodeToRemove.Right, value);
+        }
+
+        return nodeToRemove;
+        
+    }
+
+    public int Size()
+    {
+        return _nodeCount;
     }
 
     public string PreorderTraversal(int data)
