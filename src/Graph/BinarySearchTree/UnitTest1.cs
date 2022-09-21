@@ -254,36 +254,7 @@ public class BinarySearchTree
 
     public int Height()
     {
-        return HeightWhileLoop();
-        //return HeightRecurse(Root, 0, 0);
-    }
-
-    public int HeightWhileLoop()
-    {
-        TreeNode currentNode = Root;
-        int leftHeight = 0;
-        int rightHeight = 0;
-
-        while(currentNode != null)
-        {
-            if(currentNode.Left != null)
-            {
-                currentNode = currentNode.Left;
-                leftHeight++;
-            }
-            else if(currentNode.Right != null)
-            {
-                currentNode = currentNode.Right;
-                leftHeight++;
-            }
-            else
-                break;
-        }
-
-        if(rightHeight >= leftHeight)
-            return rightHeight;
-        else
-            return leftHeight;
+        return HeightRecurse(Root, 0, 0);
     }
 
     private int HeightRecurse(TreeNode node, int leftHeight, int rightHeight)
