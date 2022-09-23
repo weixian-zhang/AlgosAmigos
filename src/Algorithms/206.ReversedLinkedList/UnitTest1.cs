@@ -79,7 +79,6 @@ public class Solution {
             node = new ListNode(val);
             return node;
         }
-
         
         ListNode current = node;
 
