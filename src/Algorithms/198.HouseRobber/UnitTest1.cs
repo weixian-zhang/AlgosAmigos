@@ -5,7 +5,7 @@ public class UnitTest1
     [Fact]
     public void Test1()
     {
-        var nums = new int[] {100,2,3,4,10,100};
+        var nums = new int[] {2,3,2};
 
         var s = new Solution();
 
@@ -23,12 +23,12 @@ public class Solution {
         if(nums.Length == 2)
             return Math.Max(nums[0], nums[1]);
 
-        int[] maxBucket = new int[nums.Length + 1];
+        int[] maxBucket = new int[nums.Length];
         maxBucket[0] = 0;
-        maxBucket[1] = nums[0];
+        maxBucket[1] = nums[1];
 
         //2,7,9,3,1
-        for(int i = 1; i < nums.Length; i++)
+        for(int i = 1; i < nums.Length - 1; i++)
         {
             int currentNumber = nums[i];
             int previousMax = maxBucket[i-1];
