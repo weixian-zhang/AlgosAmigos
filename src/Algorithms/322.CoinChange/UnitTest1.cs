@@ -46,7 +46,7 @@ public class Solution {
                     //gets the previously solved coins<->amount sub-problem
                    int prevMinCoins = minCoinsSubProblem[remainer];
                 
-                  
+                   
                    if(prevMinCoins == int.MaxValue)
                         return -1;
 
@@ -72,7 +72,7 @@ public class Solution {
         var r = new List<int>();
         foreach (int x in Enumerable.Range(0, lengthOfSubCoinsProblem))
         {
-            r.Add(int.MaxValue);
+            r.Add(lengthOfSubCoinsProblem);
         }
 
         return r.ToArray();
