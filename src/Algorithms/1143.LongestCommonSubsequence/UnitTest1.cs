@@ -56,10 +56,8 @@ public class Solution {
 
                     int prevCellValue = dp[currentI][currentJ - 1];
 
-                    int currentCellValue = dp[currentI][currentJ];
-
                     //previous value carry to current cell
-                    dp[currentI][currentJ]  = Math.Max(prevCellValue, currentCellValue);
+                    dp[currentI][currentJ]  = Math.Max(prevCellValue, valueAbove);
                 }
             } 
         }
