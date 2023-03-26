@@ -22,14 +22,14 @@ public class Solution {
         
         var combination = new List<int>();
 
-        Backtrack(nums, combination);
+        Backtrack(nums);
 
         result.AddRange(tempResult);
 
         return result;
     }
 
-    private int[] Backtrack(int[] nums, List<int> combinations)
+    private int[] Backtrack(int[] nums)
     {
         //base case
         if (nums.Length == 0) {
@@ -38,16 +38,16 @@ public class Solution {
         }
 
         tempResult.Add(nums.ToList());
-        
 
         for(int idx = 0; idx < nums.Length; idx++) {
-
-            bool added = tempResult.Add(NumToList(nums[idx]));
+            
+            var numList = new List<int>(nums[idx]);
+            bool added = tempResult.Add(numList);
 
             var newNums = new List<int>(nums);
             newNums.RemoveAt(idx);
 
-            Backtrack(newNums.ToArray(), combinations);
+            Backtrack(newNums.ToArray());
         }
 
         return nums;
