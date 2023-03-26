@@ -1,3 +1,3 @@
 #### AlgosAmigos  
 
-Having fun with data structures and algorithms in .Net
+Learning data structures and algorithms
