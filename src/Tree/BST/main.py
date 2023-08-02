@@ -126,15 +126,54 @@ class BinarySearchTree:
             
         return _find_height(self.root, 1)
     
-    def find_min_on_left_subtree(self, node) -> Node:
-                
+    def delete_node(self, node: Node, target_value):
+    
         if node == None:
             return None
         
-        if node.left != None:
-            return self.find_min_on_left_subtree(node.left)
-        else:
-            return node
+        #find node to delete
+        if target_value > node.value:
+            node.right = self.delete_node(node.right, target_value)
+        elif target_value < node.value:
+            node.left = self.delete_node(node.left, target_value)
+            
+        #found the node to delete
+        elif node.value == target_value:
+            
+            node_to_del = node
+                
+            #case 1: no child
+            if node_to_del.left == None and node_to_del.right == None:
+                return None
+
+            #case 2: 1 child either left or right
+            elif node_to_del.left == None:
+                return node_to_del.right
+            elif node_to_del.right == None:
+                return node_to_del.left
+            
+            #case 3: node with both left and right child
+            else:
+                
+                # find min node value of right subtree
+                current = node_to_del
+                while current != None:
+                    current = current.left
+                min_val = current.left
+                
+                # use min val to set/replace node-to-del value
+                node_to_del.value = min_val
+                
+                # recurse right subtree to delete the "duplicated" min value node
+                self.delete_node(node_to_del.right, min_val)
+        
+        return node
+            
+            
+                
+                
+                
+        
             
     def print_pre_order(self):
         
@@ -214,8 +253,8 @@ if __name__ == '__main__':
     # val = node.value if node != None else 'None'
     # print(val)
     
-    searched_node = bst.search(8)
-    minNode = bst.find_min_on_left_subtree(searched_node)
-    print(minNode.value)
+    # searched_node = bst.search(8)
+    # minNode = bst.find_min_on_left_subtree(searched_node)
+    # print(minNode.value)
     
     
