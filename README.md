@@ -1,3 +1,3 @@
 #### AlgosAmigos  
 
-Learning data structures and algorithms
+Learning data structures and algorithms change remotely
