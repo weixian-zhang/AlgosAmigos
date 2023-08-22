@@ -1,3 +1,3 @@
 #### AlgosAmigos  
 
-Learning data structures and algorithms. Changes
+Learning data structures and algorithms
