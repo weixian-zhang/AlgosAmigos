@@ -14,6 +14,17 @@
             "cwd": "${workspaceFolder}/src/FindPairWithSumOfGivenNumber",
             "console": "internalConsole",
             "stopAtEntry": false
+        },
+        {
+            "name": ".NET Core Launch (console)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask":"build .Net project",
+            "program": "${workspaceFolder}/src/Graph/BFS/BFS_23-8-2023/bin/Debug/net7.0/BFS_23-8-2023.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/Graph/BFS/BFS_23-8-2023/",
+            "stopAtEntry": false,
+            "console": "internalConsole",
         }
     ]
 }

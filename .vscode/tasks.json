@@ -8,6 +8,14 @@
             "options": {
                 "cwd": "${workspaceFolder}/src/FindPairWithSumOfGivenNumber"
             }
+        },
+        {
+            "label": "build .Net project",
+            "type": "shell",
+            "command": "dotnet build",
+            "options": {
+                "cwd": "${workspaceFolder}/src/Graph/BFS/BFS_23-8-2023/"
+            }
         }
     ]
 }
