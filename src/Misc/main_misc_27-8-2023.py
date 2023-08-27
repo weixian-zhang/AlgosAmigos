@@ -76,6 +76,38 @@ class Permutation:
 # https://www.youtube.com/watch?v=NA2Oj9xqaZQ
 # combination - of string with no repetition to get unique codes
 
+class Combinations:
+    
+    def gen_combo(self, strInput = 'abcd'):
+        
+        if not strInput:
+            return [[]]
+        
+        result = []
+        strings = [x for x in strInput]
+        
+        def _combos(strings):
+            
+            if len(strings) == 0:
+                return [[]]
+            
+            first_char = strings[0]
+            
+            rest_of_chars = strings[1:]
+            
+            combos_without_first_char = _combos(rest_of_chars)
+            
+            combos_with_first_char = []
+            
+            for comboArr in combos_without_first_char:
+                temp = comboArr + [first_char]
+                combos_with_first_char.append(temp)
+                
+            return combos_without_first_char + combos_with_first_char
+        
+        combos = _combos(strings)
+        return [x for x in combos if  len(x) > 0]
+
 # merge sort
 
 # quick sort
@@ -85,7 +117,12 @@ class Permutation:
 
 if __name__ == '__main__':
     
-    permutation = Permutation()
-    r = permutation.permute()
-    print(len(r))
-    print(r)
+    # permutation = Permutation()
+    # r = permutation.permute()
+    # print(len(r))
+    # print(r)
+    
+    combination = Combinations()
+    combos = combination.gen_combo()
+    print(len(combos))
+    print(combos)
