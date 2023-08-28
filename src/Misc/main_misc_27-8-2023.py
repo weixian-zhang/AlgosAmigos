@@ -17,34 +17,15 @@ class LinkedList:
             
         current = self.head
         
-        while current.next != None:
-            current = current.next
-        
-        current.next = Node(data)
+        while current != None:
+            next = current.next
             
-    
-    # get node
-    # 0 index is first element
-    # def get(self, index) -> Node:
-        
-    #     if index == 0:
-    #         return self.head
-        
-    #     current = self.head
-    #     current_idx = 0
-        
-    #     while current.next != None:
+            if next == None:
+                current.next = Node(data)
+                return
+                
+            current = next
             
-    #         if current_idx == index:
-    #             return current.data
-            
-    #         current = current.next
-    #         current_idx += 1
-        
-    #     if  index > current_idx:
-    #         return -1
-        
-    #     return current.data
     
     def get(self, index):
         
@@ -79,12 +60,14 @@ class LinkedList:
         
         current = self.head
         
-        while current.next != None:
+        while current != None:
+            
+            next = current.next
             
             if current.data == data:
                 return True
             
-            current = current.next
+            current = next
         
         return False
     
@@ -93,32 +76,30 @@ class LinkedList:
         if self.head == None:
             return
         
-        # handle head node
         if self.head.data == data:
             next = self.head.next
             self.head = next
             return
-               
-        current = self.head
-        prev = current
         
-        # handle node in middle
-        while current.next != None:
+        dummyHead = Node(-1)
+        dummyHead.next = self.head
+        
+        prev = dummyHead
+        current = self.head
+        
+        while current != None:
+            
+            next = current.next
             
             if current.data == data:
                 prev.next = current.next
-                current = None
-                return
-            
-            prev = current
-            current = current.next
+            else:
+                prev = current
+                
+            current = next
         
-        # handle last node
-        if current.data == data:
-            prev.next = None
-            current = None
-            
-    def to_string(self):
+
+    def display(self):
         
         if self.head == None:
             return 'no nodes'
@@ -126,18 +107,32 @@ class LinkedList:
         result = []
         current = self.head
         
-        while current.next != None:
+        while current != None:
             
+            next = current.next
             result.append(current.data)
-            
-            current = current.next
-            
-        result.append(current.data)
+
+            current = next
             
         return ' -> '.join([str(x) for x in result])
         
     def reverse(self) -> Node:
-        pass
+        
+        prev = None
+        current = self.head
+        
+        while current != None:
+            
+            next = current.next
+            
+            current.next = prev
+            
+            prev = current
+            
+            current = next
+        
+        self.head = prev
+        
 
 # DFS graph traversal
 class DFS:
@@ -332,26 +327,33 @@ if __name__ == '__main__':
     ll.add(3)
     ll.add(4)
     ll.add(5)
+    print(ll.display())
+    
+    ll.reverse()
+    print(ll.display())
+    
+    ll.reverse()
+    print(ll.display())
     
     # print(ll.get(-6))
     
     # print(ll.find(4))
     
-    ll.delete(3)
-    print(ll.to_string())
+    # ll.delete(3)
+    # print(ll.display())
     
-    ll.delete(1)
-    print(ll.to_string())
+    # ll.delete(1)
+    # print(ll.display())
     
-    ll.delete(4)
-    print(ll.to_string())
+    # ll.delete(4)
+    # print(ll.display())
     
-    ll.delete(5)
-    print(ll.to_string())
+    # ll.delete(5)
+    # print(ll.display())
     
-    ll.delete(2)
-    print(ll.to_string())
+    # ll.delete(2)
+    # print(ll.display())
     
-    ll.add(2)
-    print(ll.to_string())
+    # ll.add(2)
+    # print(ll.display())
     
