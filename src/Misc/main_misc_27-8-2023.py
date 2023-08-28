@@ -1,4 +1,143 @@
 
+# Linked List
+class Node:
+    def __init__(self, data = 0) -> None:
+        self.data = data
+        self.next = None
+class LinkedList:
+    
+    def __init__(self) -> None:
+        self.head = None
+        
+    def add(self, data) -> None:
+        
+        if self.head == None:
+            self.head = Node(data)
+            return
+            
+        current = self.head
+        
+        while current.next != None:
+            current = current.next
+        
+        current.next = Node(data)
+            
+    
+    # get node
+    # 0 index is first element
+    # def get(self, index) -> Node:
+        
+    #     if index == 0:
+    #         return self.head
+        
+    #     current = self.head
+    #     current_idx = 0
+        
+    #     while current.next != None:
+            
+    #         if current_idx == index:
+    #             return current.data
+            
+    #         current = current.next
+    #         current_idx += 1
+        
+    #     if  index > current_idx:
+    #         return -1
+        
+    #     return current.data
+    
+    def get(self, index):
+        
+        if index == 0:
+            return self.head.data
+        
+        current_idx = 0
+        
+        def _get(node, index, current_idx):
+            
+            if current_idx == index:
+                return node.data
+            
+            if node.next == None:
+                return -1
+            
+            current_idx += 1
+            
+            return _get(node.next, index, current_idx)
+            
+        
+        return _get(self.head, index, 0)
+            
+            
+    
+    def find(self, data) -> bool:
+        
+        if self.head == None:
+            return False
+        if self.head.data == data:
+            return True
+        
+        current = self.head
+        
+        while current.next != None:
+            
+            if current.data == data:
+                return True
+            
+            current = current.next
+        
+        return False
+    
+    def delete(self, data) -> None:
+        
+        if self.head == None:
+            return
+        
+        # handle head node
+        if self.head.data == data:
+            next = self.head.next
+            self.head = next
+            return
+               
+        current = self.head
+        prev = current
+        
+        # handle node in middle
+        while current.next != None:
+            
+            if current.data == data:
+                prev.next = current.next
+                current = None
+                return
+            
+            prev = current
+            current = current.next
+        
+        # handle last node
+        if current.data == data:
+            prev.next = None
+            current = None
+            
+    def to_string(self):
+        
+        if self.head == None:
+            return 'no nodes'
+        
+        result = []
+        current = self.head
+        
+        while current.next != None:
+            
+            result.append(current.data)
+            
+            current = current.next
+            
+        result.append(current.data)
+            
+        return ' -> '.join([str(x) for x in result])
+        
+    def reverse(self) -> Node:
+        pass
 
 # DFS graph traversal
 class DFS:
@@ -11,6 +150,8 @@ class DFS:
 
 class BFS:
     pass
+
+
 
 
 # Dijkstra shortest path
@@ -180,7 +321,37 @@ if __name__ == '__main__':
     # print(len(combos))
     # print(combos)
     
-    ms = MergeSorter()
-    sorted = ms.merge_sort([2,6,5,1,7,4,3])
-    print(sorted)
+    # ms = MergeSorter()
+    # sorted = ms.merge_sort([2,6,5,1,7,4,3])
+    # print(sorted)
+    
+    
+    ll = LinkedList()
+    ll.add(1)
+    ll.add(2)
+    ll.add(3)
+    ll.add(4)
+    ll.add(5)
+    
+    # print(ll.get(-6))
+    
+    # print(ll.find(4))
+    
+    ll.delete(3)
+    print(ll.to_string())
+    
+    ll.delete(1)
+    print(ll.to_string())
+    
+    ll.delete(4)
+    print(ll.to_string())
+    
+    ll.delete(5)
+    print(ll.to_string())
+    
+    ll.delete(2)
+    print(ll.to_string())
+    
+    ll.add(2)
+    print(ll.to_string())
     
