@@ -109,6 +109,59 @@ class Combinations:
         return [x for x in combos if  len(x) > 0]
 
 # merge sort
+# https://www.youtube.com/watch?v=4VqmGXwpLqc
+# https://www.youtube.com/watch?v=KF2j-9iSf4Q
+# https://www.youtube.com/watch?v=cVZMah9kEjI
+import math
+class MergeSorter:
+    
+    def merge_sort(self, nums):
+        
+        if len(nums) == 1:
+            return nums
+        
+        middle_index = int(len(nums) / 2)
+        
+        leftArr = self.merge_sort(nums[:middle_index])
+        
+        rightArr = self.merge_sort(nums[middle_index:])
+        
+        merged = self._merge(leftArr, rightArr)
+        
+        return merged
+    
+    def _merge(self, leftArr, rightArr):
+        
+        merged = []
+        i = 0
+        j = 0
+        while i < len(leftArr) and j < len(rightArr):
+            
+            if leftArr[i] < rightArr[j]:
+                merged.append(leftArr[i])
+                i += 1
+            else:
+                merged.append(rightArr[j])
+                j += 1
+            
+
+        
+        # there are elements in either one of left or right array
+        # remember adds these "leftovers"
+        
+        while i < len(leftArr):
+            merged.append(leftArr[i])
+            i += 1
+            
+        while j < len(rightArr):
+            merged.append(rightArr[j])
+            j += 1
+            
+        return merged
+
+
+
+
 
 # quick sort
 
@@ -122,7 +175,12 @@ if __name__ == '__main__':
     # print(len(r))
     # print(r)
     
-    combination = Combinations()
-    combos = combination.gen_combo()
-    print(len(combos))
-    print(combos)
+    # combination = Combinations()
+    # combos = combination.gen_combo()
+    # print(len(combos))
+    # print(combos)
+    
+    ms = MergeSorter()
+    sorted = ms.merge_sort([2,6,5,1,7,4,3])
+    print(sorted)
+    
