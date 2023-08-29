@@ -134,6 +134,7 @@ class LinkedList:
         self.head = prev
         
 
+
 # DFS graph traversal
 class DFS:
     
@@ -148,13 +149,223 @@ class BFS:
 
 
 
-
 # Dijkstra shortest path
 
 # tree traversal
     # pre, in, post order
     
 # binary search tree
+class BSTNode:
+    def __init__(self , value) -> None:
+        self.value = value
+        self.left = None
+        self.right = None
+    
+    def has_one_child(self):
+        if self.left is not None or self.right is not None:
+            return True
+        return False
+    
+    def has_both_child(self):
+        if self.left is not None and self.right is not None:
+            return True
+        return False
+    
+class BinarySearchTree:
+    
+    def __init__(self) -> None:
+        self.root = None
+    
+    def insert(self, value):
+        
+        if self.root == None:
+            self.root = BSTNode(value)
+            return
+        
+        def _traverse(node):
+            nonlocal value
+
+            if node == None:
+                node = BSTNode(value)
+            
+            if value < node.value:
+                 node.left = _traverse(node.left)
+                 print(node.left)
+            elif value > node.value:
+                 node.right = _traverse(node.right)
+                 #print(node.right.value)
+                 
+            return node
+                 
+        _traverse(self.root)
+        
+    
+    def update(self, value):
+        pass
+    
+    def delete(self, value):
+    
+        node_to_del = self.find_by_value(value)
+        print(node_to_del.value)
+    
+        # leaf node, no child
+        if node_to_del.left is None and node_to_del.right is None:
+            node_to_del = None
+        
+        # one child, either left or right, successor take over
+        elif node_to_del.has_one_child():
+            if node_to_del.left is not None:
+                successor = node_to_del.left
+            else:
+                successor = node_to_del.right
+            
+            node_to_del = successor
+        
+        # both left and right children
+            # get either largest value of left node or smallest value of right node
+            # update node-to-del value with replace largest or smallest
+            # delete largest or smallest node by recursively going through same process
+        else:
+            largest_node_on_left = self.find_max_value(node_to_del.left)
+            
+            node_to_del = largest_node_on_left
+            
+            # now to delete largest node on left
+            self.delete(largest_node_on_left.value)
+            
+        
+        
+        
+        
+    
+    # same as DFS
+    def pre_order_traversal(self) -> str:
+        
+        result = []
+        
+        def _recurse(node):
+            
+            if node == None: return
+            
+            result.append(node.value)
+            
+            _recurse(node.left)
+            _recurse(node.right)
+        
+        _recurse(self.root) 
+        
+        return ' -> '.join([str(x) for x in result])
+        
+    
+    def in_order_traversal(self):
+        
+        result = []
+        
+        def _recurse(node):
+            
+            if node == None:
+                return
+            
+            _recurse(node.left)
+            
+            result.append(node.value)
+            
+            _recurse(node.right)
+            
+        _recurse(self.root)
+        
+        return ' -> '.join([str(x) for x in result])
+            
+    
+    def post_order_traversal(self):
+        
+        result = []
+        
+        def _recurse(node):
+            
+            if node == None:
+                return 
+            
+            _recurse(node.left)
+            
+            _recurse(node.right)
+
+            result.append(node.value)
+            
+        _recurse(self.root)
+        
+        return ' -> '.join([str(x) for x in result])
+            
+    
+    from queue import PriorityQueue
+    # breadth first search
+    def level_order_traversal(self) -> str:
+        
+        if self.root is None:
+            return ''
+        
+        result = []
+        queue = []
+        
+        queue.append(self.root)
+        
+        
+        while len(queue) > 0:
+            
+            node = queue.pop(0)
+            
+            result.append(node.value)
+            
+            if node.left is not None:
+                queue.append(node.left)
+            
+            if node.right is not None:
+                queue.append(node.right)
+                
+        
+        return ' -> '.join([str(x) for x in result])
+        
+        
+        
+        
+    
+    # depth of tree from root to last level leaf node
+    def height(self):
+        pass
+    
+    #https://www.youtube.com/watch?v=fAAZixBzIAI&t=1422s
+    def sum(self): 
+        pass
+    
+    def find_by_value(self, value) -> BSTNode:
+        
+        if self.root == None:
+            return None
+        
+        def _find(node):
+            
+            nonlocal value
+            
+            if node == None: return None
+            
+            if value < node.value:
+                node = _find(node.left)
+                
+            elif value > node.value:
+                node = _find(node.right)
+            
+            
+            return node
+        
+        node = _find(self.root)
+        
+        return node
+    
+    def find_min_value(self, node) -> BSTNode:
+        pass
+    
+    def find_max_value(self, node) -> BSTNode:
+        pass
 
 # https://www.youtube.com/watch?v=us0cYQXQpxg
 # permutations - of string with no repetition to get unique codes
@@ -195,12 +406,10 @@ class Permutation:
                     
                     temp_perms.append(temp)
                 
-                
                 first_char_at_back = permArr + [first_char]
                 
                 temp_perms.append(first_char_at_back)
                     
-            
             return temp_perms
           
                     
@@ -320,23 +529,22 @@ if __name__ == '__main__':
     # sorted = ms.merge_sort([2,6,5,1,7,4,3])
     # print(sorted)
     
+    # linked list
+    # ll = LinkedList()
+    # ll.add(1)
+    # ll.add(2)
+    # ll.add(3)
+    # ll.add(4)
+    # ll.add(5)
+    # print(ll.display())
     
-    ll = LinkedList()
-    ll.add(1)
-    ll.add(2)
-    ll.add(3)
-    ll.add(4)
-    ll.add(5)
-    print(ll.display())
+    # ll.reverse()
+    # print(ll.display())
     
-    ll.reverse()
-    print(ll.display())
-    
-    ll.reverse()
-    print(ll.display())
+    # ll.reverse()
+    # print(ll.display())
     
     # print(ll.get(-6))
-    
     # print(ll.find(4))
     
     # ll.delete(3)
@@ -356,4 +564,34 @@ if __name__ == '__main__':
     
     # ll.add(2)
     # print(ll.display())
+    
+    
+    # binary search tree
+    bst = BinarySearchTree()
+    
+    bst.insert(10)
+    bst.insert(3)
+    bst.insert(12)
+    bst.insert(5)
+    # bst.insert(30)
+    # bst.insert(15)
+    # bst.insert(25)
+    # bst.insert(1)
+    # bst.insert(40)
+    # bst.insert(20)
+    
+    print('pre order')
+    print(bst.pre_order_traversal())
+    
+    print('in order')
+    print(bst.in_order_traversal())
+    
+    print('post order')
+    print(bst.post_order_traversal())
+    
+    print('level order')
+    print(bst.level_order_traversal())
+    
+    
+    
     
