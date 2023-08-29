@@ -205,37 +205,70 @@ class BinarySearchTree:
     
     def delete(self, value):
     
-        node_to_del = self.find_by_value(value)
-        print(node_to_del.value)
-    
-        # leaf node, no child
-        if node_to_del.left is None and node_to_del.right is None:
-            node_to_del = None
+        # node_to_del = self.find_by_value(value)
+        # print(f'node to delete: {node_to_del.value}')
         
-        # one child, either left or right, successor take over
-        elif node_to_del.has_one_child():
-            if node_to_del.left is not None:
-                successor = node_to_del.left
+        def _recurse(node: BSTNode):
+            
+            nonlocal value
+            
+            if node is None:
+                return None
+            
+            if value < node.value:
+                node.left = _recurse(node.left)
+
+            elif value > node.value:
+                node.right = _recurse(node.right)
+            
+            # node found, value == node.value
             else:
-                successor = node_to_del.right
+                
+                 if node.left is None and node.right is None:
+                     node = None
             
-            node_to_del = successor
-        
-        # both left and right children
-            # get either largest value of left node or smallest value of right node
-            # update node-to-del value with replace largest or smallest
-            # delete largest or smallest node by recursively going through same process
-        else:
-            largest_node_on_left = self.find_max_value(node_to_del.left)
+                # one child, either left or right, successor take over
+                 elif node.has_one_child():
+                     pass
+                 
+                 # # both left and right children
+                    # get either largest value of left node or smallest value of right node
+                    # update node-to-del value with replace largest or smallest
+                    # delete largest or smallest node by recursively going through same process
+                 else:
+                     pass
             
-            node_to_del = largest_node_on_left
+            return node
+        
+            # # leaf node, no child
+            # if node_to_del.left is None and node_to_del.right is None:
+            #     node_to_del = None
             
-            # now to delete largest node on left
-            self.delete(largest_node_on_left.value)
+            # # one child, either left or right, successor take over
+            # elif node_to_del.has_one_child():
+            #     if node_to_del.left is not None:
+            #         successor = node_to_del.left
+            #     else:
+            #         successor = node_to_del.right
+                
+            #     node_to_del = successor
             
+            # # both left and right children
+            #     # get either largest value of left node or smallest value of right node
+            #     # update node-to-del value with replace largest or smallest
+            #     # delete largest or smallest node by recursively going through same process
+            # else:
+            #     largest_node_on_left = self.find_max_value(node_to_del.left)
+                
+            #     node_to_del = largest_node_on_left
+                
+            #     # now to delete largest node on left
+            #     _recurse(largest_node_on_left.value)
+                
+                
+        _recurse(self.root)
         
-        
-        
+            
         
     
     # same as DFS
@@ -324,8 +357,6 @@ class BinarySearchTree:
                 
         
         return ' -> '.join([str(x) for x in result])
-        
-        
         
         
     
@@ -570,9 +601,11 @@ if __name__ == '__main__':
     bst = BinarySearchTree()
     
     bst.insert(10)
-    bst.insert(3)
-    bst.insert(12)
+    bst.insert(6)
+    bst.insert(21)
     bst.insert(5)
+    bst.insert(8)
+    bst.insert(18)
     # bst.insert(30)
     # bst.insert(15)
     # bst.insert(25)
@@ -580,16 +613,19 @@ if __name__ == '__main__':
     # bst.insert(40)
     # bst.insert(20)
     
-    print('pre order')
-    print(bst.pre_order_traversal())
+    # print('pre order')
+    # print(bst.pre_order_traversal())
     
-    print('in order')
-    print(bst.in_order_traversal())
+    # print('in order')
+    # print(bst.in_order_traversal())
     
-    print('post order')
-    print(bst.post_order_traversal())
+    # print('post order')
+    # print(bst.post_order_traversal())
     
-    print('level order')
+    # print('level order')
+    # print(bst.level_order_traversal())
+    
+    bst.delete(18)
     print(bst.level_order_traversal())
     
     
