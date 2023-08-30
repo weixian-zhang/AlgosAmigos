@@ -162,7 +162,7 @@ class BSTNode:
         self.right = None
     
     def has_one_child(self):
-        if self.left is not None or self.right is not None:
+        if (self.left is None and self.right is not None) or (self.left is not None and self.right is None):
             return True
         return False
     
@@ -204,22 +204,18 @@ class BinarySearchTree:
         pass
     
     def delete(self, value):
-    
-        # node_to_del = self.find_by_value(value)
-        # print(f'node to delete: {node_to_del.value}')
+
         
-        def _recurse(node: BSTNode):
-            
-            nonlocal value
+        def _recurse(node: BSTNode, value):
             
             if node is None:
                 return None
             
             if value < node.value:
-                node.left = _recurse(node.left)
+                node.left = _recurse(node.left, value)
 
             elif value > node.value:
-                node.right = _recurse(node.right)
+                node.right = _recurse(node.right, value)
             
             # node found, value == node.value
             else:
@@ -229,14 +225,24 @@ class BinarySearchTree:
             
                 # one child, either left or right, successor take over
                  elif node.has_one_child():
-                     pass
+                     if node.left is not None:
+                         return node.left
+                     else:
+                        return node.right
                  
                  # # both left and right children
                     # get either largest value of left node or smallest value of right node
                     # update node-to-del value with replace largest or smallest
                     # delete largest or smallest node by recursively going through same process
                  else:
-                     pass
+                     
+                     min_node_of_right_tree = self._find_min_value(node.right)
+                     
+                     node.value = min_node_of_right_tree.value
+                     
+                     # delete min node of right
+                     temp = _recurse(min_node_of_right_tree, min_node_of_right_tree.value)
+                     node.right = temp
             
             return node
         
@@ -258,7 +264,7 @@ class BinarySearchTree:
             #     # update node-to-del value with replace largest or smallest
             #     # delete largest or smallest node by recursively going through same process
             # else:
-            #     largest_node_on_left = self.find_max_value(node_to_del.left)
+            #     largest_node_on_left = self._find_max_value(node_to_del.left)
                 
             #     node_to_del = largest_node_on_left
                 
@@ -266,7 +272,7 @@ class BinarySearchTree:
             #     _recurse(largest_node_on_left.value)
                 
                 
-        _recurse(self.root)
+        _recurse(self.root, value)
         
             
         
@@ -368,35 +374,34 @@ class BinarySearchTree:
     def sum(self): 
         pass
     
-    def find_by_value(self, value) -> BSTNode:
+    def min(self) -> BSTNode:
         
-        if self.root == None:
-            return None
-        
-        def _find(node):
-            
-            nonlocal value
-            
-            if node == None: return None
-            
-            if value < node.value:
-                node = _find(node.left)
-                
-            elif value > node.value:
-                node = _find(node.right)
-            
-            
-            return node
-        
-        node = _find(self.root)
-        
+        node = self._find_min_value(self.root.left)
         return node
     
-    def find_min_value(self, node) -> BSTNode:
-        pass
+    def max(self) -> BSTNode:
+        
+        node = self._find_max_value(self.root.right)
+        return node
     
-    def find_max_value(self, node) -> BSTNode:
-        pass
+    
+    
+    def _find_min_value(self, node) -> BSTNode:
+        
+        if node.left is None:
+            return node
+        
+        return self._find_min_value(node.left)
+        
+    
+    def _find_max_value(self, node) -> BSTNode:
+        
+        
+        if node.right is None:
+            return node
+        
+        return self._find_max_value(node.right)
+        
 
 # https://www.youtube.com/watch?v=us0cYQXQpxg
 # permutations - of string with no repetition to get unique codes
@@ -606,6 +611,9 @@ if __name__ == '__main__':
     bst.insert(5)
     bst.insert(8)
     bst.insert(18)
+    bst.insert(4)
+    bst.insert(1)
+    
     # bst.insert(30)
     # bst.insert(15)
     # bst.insert(25)
@@ -625,8 +633,11 @@ if __name__ == '__main__':
     # print('level order')
     # print(bst.level_order_traversal())
     
-    bst.delete(18)
-    print(bst.level_order_traversal())
+    #bst.delete(6)
+    print(bst.min().value)
+    
+    print(bst.max().value)
+    
     
     
     
