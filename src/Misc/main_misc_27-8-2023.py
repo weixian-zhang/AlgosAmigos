@@ -365,8 +365,54 @@ class BinarySearchTree:
         
     
     #https://www.youtube.com/watch?v=fAAZixBzIAI&t=1422s
-    def sum(self): 
-        pass
+    def sum_with_recursion(self): 
+        
+        if self.root is None:
+            return 0
+        
+        sum = 0
+        
+        def _recurse(node):
+            nonlocal sum
+            
+            if node is None:
+                return 0
+
+            sum += node.value
+            
+            _recurse(node.left)
+            
+            _recurse(node.right)
+            
+            return sum
+            
+        
+        _recurse(self.root) + self.root.value
+        
+        return sum
+    
+    def sum_with_breadth_first_search(self):
+        
+        queue = []
+        sum = 0
+        
+        queue.append(self.root)
+        
+        while len(queue) > 0:
+            
+            current_node = queue.pop()
+            
+            sum += current_node.value
+            
+            if current_node.left is not None:
+                queue.append(current_node.left)
+                
+            if current_node.right is not None:
+                queue.append(current_node.right)
+                
+        return sum
+        
+        
     
     def min(self) -> BSTNode:
         
@@ -659,7 +705,11 @@ if __name__ == '__main__':
     
     # print(bst.max().value)
     
-    print(bst.height())
+    # print(bst.height())
+    
+    print(bst.sum_with_breadth_first_search())
+    
+    print(bst.sum_with_recursion())
     
     
     
