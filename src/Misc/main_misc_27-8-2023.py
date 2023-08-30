@@ -274,8 +274,6 @@ class BinarySearchTree:
                 
         _recurse(self.root, value)
         
-            
-        
     
     # same as DFS
     def pre_order_traversal(self) -> str:
@@ -366,10 +364,6 @@ class BinarySearchTree:
         
         
     
-    # depth of tree from root to last level leaf node
-    def height(self):
-        pass
-    
     #https://www.youtube.com/watch?v=fAAZixBzIAI&t=1422s
     def sum(self): 
         pass
@@ -383,7 +377,6 @@ class BinarySearchTree:
         
         node = self._find_max_value(self.root.right)
         return node
-    
     
     
     def _find_min_value(self, node) -> BSTNode:
@@ -401,6 +394,34 @@ class BinarySearchTree:
             return node
         
         return self._find_max_value(node.right)
+    
+    # depth of tree from root to last level leaf node
+    def height(self):
+        
+        def _recurse(node):
+            
+            # my style
+            # if node is None:
+            #     return 0
+            
+            # leftHeight = _recurse(node.left) + 1
+            
+            # rightHeight = _recurse(node.right) + 1
+            
+            # maxHeight = max(leftHeight, rightHeight)
+            
+            # return maxHeight
+            
+            # simplified style
+            if node is None:
+                return 0
+            
+            return max(_recurse(node.left), _recurse(node.right)) + 1
+            
+            
+        height = _recurse(self.root)
+        
+        return height
         
 
 # https://www.youtube.com/watch?v=us0cYQXQpxg
@@ -634,9 +655,11 @@ if __name__ == '__main__':
     # print(bst.level_order_traversal())
     
     #bst.delete(6)
-    print(bst.min().value)
+    # print(bst.min().value)
     
-    print(bst.max().value)
+    # print(bst.max().value)
+    
+    print(bst.height())
     
     
     
