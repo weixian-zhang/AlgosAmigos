@@ -1,4 +1,107 @@
 
+class BinarySearch:
+    
+    def __init__(self) -> None:
+        self.nums = [44, 22, 1,0,232,33,77,12,8,6,2]
+        
+        sorter = MergeSorter()
+        
+        self.nums = sorter.sort(self.nums)
+        
+    def search(self, target):
+        low = 0
+        high = len(self.nums) - 1
+        
+        
+        while low <= high:
+            
+            middle = (high + low) // 2
+            
+            p_answer = self.nums[middle]
+            
+            if p_answer == target:
+                return True, middle
+            
+            elif p_answer > target:
+                high = middle - 1
+            
+            else:
+                low = middle + 1
+                
+        return False, -1
+    
+
+# merge sort
+# https://www.youtube.com/watch?v=4VqmGXwpLqc
+# https://www.youtube.com/watch?v=KF2j-9iSf4Q
+# https://www.youtube.com/watch?v=cVZMah9kEjI
+class MergeSorter:
+    
+    def sort(self, nums):
+        
+        result = []
+        
+        def _recurse(nums):
+            
+            nonlocal result
+            
+            if len(nums) <= 1:
+                return nums
+            
+            middle = len(nums) // 2
+            
+            leftArr = _recurse(nums[:middle])
+            
+            rightArr = _recurse(nums[middle:])
+            
+            result = self._merge(leftArr, rightArr)
+            
+            return result
+        
+
+        return _recurse(nums)
+    
+    def _merge(self, left, right) -> list[int]:
+        
+        result = []
+        i = 0
+        j = 0
+        
+        if left == [] or right == []:
+            return left + right
+        
+        while i <= len(left)-1 and j <= len(right)-1:
+            
+            if left[i] < right[j]:
+                result.append(left[i])
+                i += 1
+                
+            elif left[i] > right[j]:
+                result.append(right[j])
+                j += 1
+                
+            else:
+                result.append(left[i])
+                result.append(right[j])
+                i += 1
+                j += 1
+        
+        # merge remaining of left
+        while i <= len(left)-1:
+            result.append(left[i])
+            i += 1
+            
+        
+        #merge remaining of right
+        while j <= len(right)-1:
+            result.append(right[j])
+            j += 1
+        
+        return result
+
+# quick sort
+                    
+                    
 class AdjacencyMatrix:
     
     def __init__(self) -> None:
@@ -741,62 +844,7 @@ class Combinations:
         combos = _combos(strings)
         return [x for x in combos if  len(x) > 0]
 
-# merge sort
-# https://www.youtube.com/watch?v=4VqmGXwpLqc
-# https://www.youtube.com/watch?v=KF2j-9iSf4Q
-# https://www.youtube.com/watch?v=cVZMah9kEjI
-import math
-class MergeSorter:
-    
-    def merge_sort(self, nums):
-        
-        if len(nums) == 1:
-            return nums
-        
-        middle_index = int(len(nums) / 2)
-        
-        leftArr = self.merge_sort(nums[:middle_index])
-        
-        rightArr = self.merge_sort(nums[middle_index:])
-        
-        merged = self._merge(leftArr, rightArr)
-        
-        return merged
-    
-    def _merge(self, leftArr, rightArr):
-        
-        merged = []
-        i = 0
-        j = 0
-        while i < len(leftArr) and j < len(rightArr):
-            
-            if leftArr[i] < rightArr[j]:
-                merged.append(leftArr[i])
-                i += 1
-            else:
-                merged.append(rightArr[j])
-                j += 1
-            
 
-        
-        # there are elements in either one of left or right array
-        # remember adds these "leftovers"
-        
-        while i < len(leftArr):
-            merged.append(leftArr[i])
-            i += 1
-            
-        while j < len(rightArr):
-            merged.append(rightArr[j])
-            j += 1
-            
-        return merged
-
-
-
-
-
-# quick sort
 
 
 
@@ -912,7 +960,11 @@ if __name__ == '__main__':
     # smallest_sub_array_size_nums = [4,2,2,7,8,1,2,8,1,0]
     # find_smallest_sub_array_size(smallest_sub_array_size_nums)
     
-    adjacencyMatrix = AdjacencyMatrix()
-    adjacencyMatrix.dfs(0)
+    # adjacencyMatrix = AdjacencyMatrix()
+    # adjacencyMatrix.dfs(0)
+    
+    binarySearch = BinarySearch()
+    found, index = binarySearch.search(2)
+    print(found)
     
     
