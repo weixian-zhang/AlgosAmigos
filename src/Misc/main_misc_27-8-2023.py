@@ -1,4 +1,44 @@
 
+# algorithm pattern - sliding window
+# Online Python compiler (interpreter) to run Python online.
+# Write Python 3 code in this online editor and run it.
+
+def find_max_subarray(find_max_subarray_nums, k):
+    
+    largestSum = 0
+    windows_size = k
+    
+    for i in range(len(find_max_subarray_nums) - windows_size):
+        
+        temp = sum(find_max_subarray_nums[i:i+windows_size])
+        largestSum = max(temp, largestSum)
+        
+    print(largestSum)
+
+# find smallest size/length of subarray where sub >= 8
+def find_smallest_sub_array_size(find_max_subarray_nums, sumConstraint = 8):
+    
+    nums = smallest_sub_array_size_nums
+    smallest_size_so_far = 0
+    
+    for i in range(len(nums)):
+        for j in range(i+1, len(nums)):
+            
+            if sum(nums[i:j]) >= sumConstraint:
+                
+                current_size = j-i
+                
+                if smallest_size_so_far > 0:
+                    smallest_size_so_far = min(current_size, smallest_size_so_far)
+                        
+                else:
+                    smallest_size_so_far = current_size
+                    
+                break
+            
+    print(smallest_size_so_far)
+      
+
 # Linked List
 class Node:
     def __init__(self, data = 0) -> None:
@@ -134,18 +174,113 @@ class LinkedList:
         self.head = prev
         
 
-
+import json
 # DFS graph traversal
 class DFS:
     
     def __init__(self) -> None:
         
-        graph = {
-            0, [()]
+        self.graph = {
+            0: [1,2,3],
+            1: [0],
+            2: [3, 4],
+            3: [0, 2],
+            4: [ 2]
         }
+        
+    def search(self, startNode: int):
+        
+        visited = []
+        
+        def _recurse(node):
+            
+            visited.append(node)
+            
+            for n in self.graph[node]:
+                
+                if n not in visited:
+                    _recurse(n)
+        
+        _recurse(0)
+        
+        print(','.join([str(x) for x in visited]))
+        
+            
+            
 
 class BFS:
-    pass
+    def __init__(self) -> None:
+        
+        self.graph = {
+            0: [7,9,11],
+            1: [8,10],
+            2: [3,12],
+            3: [2,4,7],
+            4: [3],
+            5: [6],
+            6: [5,7],
+            7: [0,3,6,11],
+            8: [1,9,12],
+            9: [0,8,10],
+            10: [1,9],
+            11: [0, 7],
+            12: [2,8]
+        }
+        
+    def traverse(self,node, end):
+        
+        visited = []
+        queue = []
+        parentTracker = {}
+        levelTracker = {}
+        
+        queue.append(node)
+        
+        levelTracker[node] = 0
+        
+        while len(queue) > 0:
+            
+            current_node = queue.pop(0)
+            
+            if current_node not in visited:
+                visited.append(current_node)
+            
+            for neighbour in self.graph[current_node]:
+                
+                if neighbour in visited:
+                    continue
+                
+                
+                
+                # track each neighbour's parent 
+                parentTracker[neighbour] = current_node
+                
+                # track number of hops from parent -> neightbour
+                levelTracker[neighbour] = levelTracker[current_node] + 1
+                
+                queue.append(neighbour)
+                
+            
+        path = self.backtrack_parent_to_get_path(parentTracker, end)
+        distant = levelTracker[end]
+        return ' -> '.join([str(x) for x in path]), distant
+        
+    
+    # shortest number of node hops
+    def backtrack_parent_to_get_path(self, parentTracker, destinationNode):
+        
+        node = parentTracker[destinationNode]
+        
+        result = []
+        result.append(destinationNode)
+        result.append(node)
+        
+        while node in parentTracker:
+            node = parentTracker[node]
+            result.append(node)
+            
+        result.reverse()
+        return result
 
 
 
@@ -370,31 +505,31 @@ class BinarySearchTree:
         if self.root is None:
             return 0
         
-        sum = 0
+        totalSum = 0
         
         def _recurse(node):
-            nonlocal sum
+            nonlocal totalSum
             
             if node is None:
                 return 0
 
-            sum += node.value
+            totalSum += node.value
             
             _recurse(node.left)
             
             _recurse(node.right)
             
-            return sum
+            return totalSum
             
         
         _recurse(self.root) + self.root.value
         
-        return sum
+        return totalSum
     
     def sum_with_breadth_first_search(self):
         
         queue = []
-        sum = 0
+        totalSum = 0
         
         queue.append(self.root)
         
@@ -402,7 +537,7 @@ class BinarySearchTree:
             
             current_node = queue.pop()
             
-            sum += current_node.value
+            totalSum += current_node.value
             
             if current_node.left is not None:
                 queue.append(current_node.left)
@@ -410,7 +545,7 @@ class BinarySearchTree:
             if current_node.right is not None:
                 queue.append(current_node.right)
                 
-        return sum
+        return totalSum
         
         
     
@@ -707,11 +842,25 @@ if __name__ == '__main__':
     
     # print(bst.height())
     
-    print(bst.sum_with_breadth_first_search())
+    # print(bst.sum_with_breadth_first_search())
     
-    print(bst.sum_with_recursion())
+    # print(bst.sum_with_recursion())
     
     
+    
+    # depth first search
+    # dfs = DFS()
+    # dfs.search(0)
+    
+    # bfs = BFS()
+    # path, distant = bfs.traverse(1, 6)
+    # print(f'distant: {distant}, {path}')
+    
+    # find_max_subarray_nums = [4,2,1,7,8,1,2,8,1,0]
+    # find_max_subarray(find_max_subarray_nums, 3)
+    
+    smallest_sub_array_size_nums = [4,2,2,7,8,1,2,8,1,0]
+    find_smallest_sub_array_size(smallest_sub_array_size_nums)
     
     
     
