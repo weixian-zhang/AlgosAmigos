@@ -1,4 +1,54 @@
 
+class AdjacencyMatrix:
+    
+    def __init__(self) -> None:
+        
+        # nodes: a=0, b=1, c=2, d=3
+        # adj_matrix = [
+        #     [0,1,1,0],
+        #     [1,0,0,1],
+        #     [1,0,0,1],
+        #     [0,1,1,0],
+        # ]
+        self.nodes = [0,1,2,3]
+        self.adj_matrix = []
+        for x in range(4):
+            self.adj_matrix.append([0 for x in range(4)])
+            
+        self.add_edge(0,1)
+        self.add_edge(0,2)
+        self.add_edge(1,0)
+        self.add_edge(1,3)
+        self.add_edge(2,0)
+        self.add_edge(2,3)
+        self.add_edge(3,1)
+        self.add_edge(3,2)
+            
+    def add_edge(self, src, dest):
+        self.adj_matrix[src][dest] = 1
+    
+    
+    def dfs(self, start):
+        
+        visited = []
+        
+        def _recurse(node):
+            
+            visited.append(node)
+            
+            # go thru column, i is the neighbour
+            for i in range(len(self.nodes)):
+                
+                if self.adj_matrix[node][i] == 1 and i not in visited:
+                        _recurse(i)
+            
+        start_node = 0
+        
+        _recurse(0)
+        
+        print(visited)
+
+
 # algorithm pattern - sliding window
 # Online Python compiler (interpreter) to run Python online.
 # Write Python 3 code in this online editor and run it.
@@ -859,8 +909,10 @@ if __name__ == '__main__':
     # find_max_subarray_nums = [4,2,1,7,8,1,2,8,1,0]
     # find_max_subarray(find_max_subarray_nums, 3)
     
-    smallest_sub_array_size_nums = [4,2,2,7,8,1,2,8,1,0]
-    find_smallest_sub_array_size(smallest_sub_array_size_nums)
+    # smallest_sub_array_size_nums = [4,2,2,7,8,1,2,8,1,0]
+    # find_smallest_sub_array_size(smallest_sub_array_size_nums)
     
+    adjacencyMatrix = AdjacencyMatrix()
+    adjacencyMatrix.dfs(0)
     
     
