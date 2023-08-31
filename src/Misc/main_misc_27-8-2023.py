@@ -22,11 +22,11 @@ class BinarySearch:
             if p_answer == target:
                 return True, middle
             
-            elif p_answer > target:
-                high = middle - 1
+            elif target > p_answer:
+                low = middle + 1
             
             else:
-                low = middle + 1
+                high = middle - 1
                 
         return False, -1
     
@@ -964,7 +964,7 @@ if __name__ == '__main__':
     # adjacencyMatrix.dfs(0)
     
     binarySearch = BinarySearch()
-    found, index = binarySearch.search(2)
+    found, index = binarySearch.search(232)
     print(found)
     
     
