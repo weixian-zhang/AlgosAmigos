@@ -29,7 +29,49 @@ class BinarySearch:
                 high = middle - 1
                 
         return False, -1
+
+# quick sort
+# https://www.youtube.com/watch?v=Vtckgz38QHs&t=221s
+class QuickSorter:
     
+    def sort(self, nums):
+        
+        
+        def _recurse(nums, start, end):
+            
+            if i >= j:
+                return nums
+
+            pivotIndex = len(nums)-1
+            pivot = nums[len(nums)-1]
+            
+            i = 0
+            j = -1
+            
+            while j < len(nums[start:end]):
+                
+                if nums[i] < pivot:
+                    i += 1
+                    self.swap(nums, i, j)
+                    
+            self.swap(nums, i, pivotIndex)
+            
+            leftOfPivot = nums[i-1:]
+            
+            pivot = nums[pivotIndex]
+            
+            rightOfPivot = nums[:i+1]
+            
+            _recurse(leftOfPivot, 0, i-1)
+            
+            _recurse(rightOfPivot, i + 1,  len(nums)-1)
+            
+            sorted =
+    
+    def swap(self, nums, i, j):
+        temp = nums[i]
+        nums[i] = nums[j]
+        nums[j] = temp
 
 # merge sort
 # https://www.youtube.com/watch?v=4VqmGXwpLqc
