@@ -66,7 +66,7 @@ class QuickSorter:
             
             _recurse(rightOfPivot, i + 1,  len(nums)-1)
             
-            sorted =
+        sorted = _recurse(nums,0, len(nums))
     
     def swap(self, nums, i, j):
         temp = nums[i]
@@ -260,6 +260,26 @@ class LinkedList:
                 return
                 
             current = next
+    
+    def get_at(self, position):
+        
+        if position == 0:
+            return self.head
+        
+        current = self.head
+        
+        pos = 1
+        while current is not None:
+            
+            next = current.next
+            
+            if pos == position:
+                return current
+            
+            current = next
+            pos += 1
+        
+        return None
             
     
     def get(self, index):
@@ -849,6 +869,34 @@ class Permutation:
         perms = _recurse(strings)         
             
         return perms
+    
+    def permute_2(self, input = 'abc'):
+        
+        letters = [str(x) for x in input]
+        permutation = []
+        result = []
+        length = len(letters)
+        
+        def _recurse(letters, permutation, result):
+            
+            if len(permutation) == len(letters):
+                result.append(''.join(permutation))
+                return
+            
+            for i in range(len(letters)):
+                
+                if letters[i] not in permutation:
+                    permutation.append(letters[i])
+                
+                    _recurse(letters, permutation, result)
+                
+                    permutation.pop()
+        
+        
+        _recurse(letters, permutation, result)
+        
+        return result
+                
 
 
 # https://www.youtube.com/watch?v=NA2Oj9xqaZQ
@@ -893,10 +941,12 @@ class Combinations:
 
 if __name__ == '__main__':
     
-    # permutation = Permutation()
+    permutation = Permutation()
     # r = permutation.permute()
     # print(len(r))
     # print(r)
+    # r1 = permutation.permute_2()
+    # print(r1)
     
     # combination = Combinations()
     # combos = combination.gen_combo()
@@ -908,13 +958,16 @@ if __name__ == '__main__':
     # print(sorted)
     
     # linked list
-    # ll = LinkedList()
-    # ll.add(1)
-    # ll.add(2)
-    # ll.add(3)
-    # ll.add(4)
-    # ll.add(5)
-    # print(ll.display())
+    ll = LinkedList()
+    ll.add(1)
+    ll.add(2)
+    ll.add(3)
+    ll.add(4)
+    ll.add(5)
+    print(ll.display())
+    
+    nodeResult = ll.get_at(2)
+    print(nodeResult.data)
     
     # ll.reverse()
     # print(ll.display())
