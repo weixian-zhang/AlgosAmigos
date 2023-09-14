@@ -8,33 +8,48 @@ class KnapsackSolution:
         knapsack = []
         includedItemProfit = 0
         excludedSkipItemProfit = 0
+        memoization = [x for x in range(len(items))]
         
-        def _recurse(capacity, itemIdx):
-            
+        for idx in range(len(memoization)):
+            memoization[idx] = [-1 for x in range(capacity)]
+        
+        def _recurse(capacity, itemIdx, result):
+            nonlocal memoization
             """processing last item to first
             """
             
-            if itemIdx == -1 or capacity <= 0:
-                return 0
             
             
             current_item = items[itemIdx]
             itemWeight = current_item[0]
             itemProfit = current_item[1]
             
+            if memoization[idx][capacity-1] != -1:
+                return memoization[idx][itemWeight]
+            
+            if itemIdx == -1 or capacity <= 0:
+                result = 0
+            
             # skip item is item is bigger than capacity
-            if itemWeight > capacity:
+            elif itemWeight > capacity:
                 
-                return _recurse(capacity, itemIdx - 1)
+                result = _recurse(capacity, itemIdx - 1, result)
             
             else:
                 reducedCapacity = capacity - itemWeight
                 
-                return max(itemProfit + _recurse(reducedCapacity, itemIdx - 1), _recurse(capacity, itemIdx - 1))
+                includeFirstItemProfit = itemProfit + _recurse(reducedCapacity, itemIdx - 1, result)
                 
+                excludeFirstItemProfit =_recurse(capacity, itemIdx - 1, result)
+                
+                result = max(includeFirstItemProfit, excludeFirstItemProfit)
+                
+                memoization[idx][capacity-1] = result #max(itemProfit + _recurse(reducedCapacity, itemIdx - 1), _recurse(capacity, itemIdx - 1))
+            
+            return result
                 
         
-        items_with_highest_profit = _recurse(capacity, len(items) - 1)
+        items_with_highest_profit = _recurse(capacity, len(items) - 1, 0)
         
         return items_with_highest_profit
         
