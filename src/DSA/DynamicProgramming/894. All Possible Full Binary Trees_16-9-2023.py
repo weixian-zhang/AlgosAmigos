@@ -42,7 +42,29 @@ def list_to_binary_tree_recursion(nodes=[1,2,3,4,5,6,7]):
 
 
 def list_to_binary_tree_level_order_traversal(nodes=[1,2,3,4,5,6,7]):
-    pass
+    
+    queue = []
+    
+    root = TreeNode(nodes[0])
+    queue.append(root)
+    idx = 1
+    
+    while len(queue) > 0:
+        
+        current_node = queue.pop(0)
+        
+        if idx <= len(nodes) - 1:
+            current_node.left = TreeNode(nodes[idx])
+            queue.append(current_node.left)
+            idx += 1
+            
+        if idx <= len(nodes) - 1:
+            current_node.right = TreeNode(nodes[idx])
+            queue.append(current_node.right)
+            idx += 1
+            
+    return root
+        
 
 def in_order_traversal(node: TreeNode):
     
@@ -61,5 +83,8 @@ def in_order_traversal(node: TreeNode):
 
 
 if __name__ == '__main__':
-    node = list_to_binary_tree_recursion()
-    in_order_traversal(node)
+    # r1 = list_to_binary_tree_recursion()
+    # in_order_traversal(r1)
+    
+    r2 = list_to_binary_tree_level_order_traversal()
+    in_order_traversal(r2)
