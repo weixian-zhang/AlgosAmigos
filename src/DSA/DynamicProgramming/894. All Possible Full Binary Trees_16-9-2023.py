@@ -17,21 +17,26 @@ class Solution:
         
         result = []
         
-        def _recurse(n):
+        def _backtrack(n):
             
             if n == 0:
                 return []
             if n == 1:
-                return [TreeNode(0)]
+                return [TreeNode()]
             
             for l in range(n):
                 
                 r = n - 1 - l
                 
-                leftTree = _recurse(l), 
+                if l == 2:
+                    pass
                 
-                rightTree = _recurse(r)
+                leftTree = _backtrack(l)
                 
+                rightTree = _backtrack(r)
+            
+            if leftTree is None:
+                pass
                 
             for t1 in leftTree:
                 for t2 in rightTree:
@@ -70,7 +75,7 @@ class Solution:
                 
         #_recurse(root, 3, n)
         
-        _recurse(7)
+        _backtrack(4)
         
         return result
         
