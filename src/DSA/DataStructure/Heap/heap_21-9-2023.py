@@ -1,5 +1,6 @@
 
-import math
+#https://afteracademy.com/blog/operations-on-heaps/
+
 class Heap:
     
     def top_down_heapify_max(self, nums, idx):
