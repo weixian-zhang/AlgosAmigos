@@ -21,13 +21,18 @@ class Heap:
             #nums[idx], nums[largest] = nums[largest], nums[idx]
             self.top_down_heapify_max(nums, largest)
     
-    def bottom_up_heapify(self, nums):
-        pass
+    def bottom_up_heapify(self, nums, idx):
+        
+        parentIdx = (idx - 1) // 2
+        
+        if nums[parentIdx] < nums[idx]:
+            self._swap(nums, idx, parentIdx)
+            self.bottom_up_heapify(nums, parentIdx)
     
     def build_max_heap(self, numsArr):
         
         # get starting point to heapify, last internal node before any leave node starts
-        startIdx = math.ceil(len(numsArr) / 2) - 1
+        startIdx = (len(numsArr) // 2) - 1
         
         for idx in range(startIdx, -1, -1):
             self.top_down_heapify_max(numsArr, idx)
@@ -37,8 +42,11 @@ class Heap:
     def build_min_heap(self):
         pass
     
-    def insert(self, val):
-        pass
+    def insert(self, nums: list[int], val):
+        
+        nums.append(val)
+        
+        self.bottom_up_heapify(nums, len(nums) - 1)
     
     def delete(self, val):
         pass
@@ -58,6 +66,10 @@ if __name__ == '__main__':
     heap = Heap()
     
     maxHeap = heap.build_max_heap(nums)
+    
+    print(maxHeap)
+    
+    heap.insert(nums, 10)
     
     print(maxHeap)
     
