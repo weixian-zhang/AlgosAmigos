@@ -1,4 +1,5 @@
 class Solution:
+    # my solution
     def removeDuplicates(self, nums: list[int]) -> int:
         
         numTracker = []
@@ -32,6 +33,23 @@ class Solution:
                 break
             
         return k
+    
+    # 2 pointer solution
+    # def removeDuplicates(self, nums: list[int]) -> int:
+    
+    #     insertIdx = 1
+    
+    #     for x in range(1, len(nums)):
+            
+    #         if nums[x] != nums[x - 1]:
+    #             nums[insertIdx] = nums[x]
+    #             insertIdx += 1
+
+                
+    #     return insertIdx
+        
+        
+        
     
 
 if __name__ == '__main__':
