@@ -25,6 +25,8 @@ class Solution:
             
     def rotate_right_with_extra_array_2(self, nums: list[int], k):
         
+        k = k % len(nums)
+        
         left, right = 0, len(nums) - 1
         while left < right:
             nums[left], nums[right] = nums[right], nums[left]
