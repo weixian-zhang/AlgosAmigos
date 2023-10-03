@@ -1,46 +1,5 @@
 class Solution:
-    
-    # def merge(self, intervals: list[list[int]]) -> list[list[int]]:
-        
-    #     mergeResult = []
-    #     minStart = min([x[0] for x in intervals])
-    #     maxEnd = max([x[1] for x in intervals])
-        
-    #     intervalTable = [-1 for x in range(minStart, maxEnd+1)]
-        
-    #     for x in intervals:
-    #         startIdx = x[0] - 1
-    #         endIdx = x[1]
-            
-    #         for j in range(startIdx, endIdx):
-    #             intervalTable[j] =  1
-        
-    #     mergeSlices = []
-    #     i, j = 0, 0
-        
-    #     while i <= len(intervalTable)-1 and j <= len(intervalTable)-1:
-            
-            
-    #         if intervalTable[j] == 1:
-    #             j += 1
-    #         elif intervalTable[j] == -1 and j > i:
-    #             mergeSlices.append([i+1, j])
-    #             j += 1
-    #             i = j
-    #         else:
-    #             i += 1
-    #             j += 1
-                
-    #     if i < j:
-    #         mergeSlices.append([i+1, j])
-            
-        
-    #     return mergeSlices
-            
-            
-        
-            
-        
+                      
     def merge(self, intervals: list[list[int]]) -> list[list[int]]:
         
         if len(intervals) == 0:
@@ -48,10 +7,7 @@ class Solution:
         if len(intervals) == 1:
             return [intervals[0]]
         
-        result = []
-        tempMerger = []
         tempResult = []
-        overlapIdx = 0
         
         import operator
         intervals.sort(key=operator.itemgetter(0))
@@ -76,20 +32,9 @@ class Solution:
                    if idx == len(intervals) - 1:
                        tempResult.append(intervals[idx])
                        
-        
         return tempResult      
     
-        
-        # for x in tempResult:
             
-        #     minStart = min([i[0] for i in x])  
-        #     maxEnd = max([i[1] for i in x])  
-            
-        #     result.append([minStart, maxEnd])
-            
-        # return result
-            
-    
     def _merge(self, a, b):
         
         minStart = min(a[0], b[0])
