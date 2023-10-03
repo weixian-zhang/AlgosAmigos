@@ -45,7 +45,7 @@ class Solution:
         aStart, aEnd = a[0], a[-1]
         bStart, bEnd = b[0], b[-1]
         
-        if aStart <= bEnd and bStart <= aEnd:
+        if bStart <= aEnd: #:aStart <= bEnd and bStart <= aEnd:
             return True
         
         return False
