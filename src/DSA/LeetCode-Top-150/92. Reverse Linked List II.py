@@ -3,7 +3,51 @@ class ListNode:
         self.val = val
         self.next = next
 class Solution:
+    
     def reverseBetween(self, head: ListNode, left: int, right: int) -> ListNode:
+        
+        dummy = ListNode(-10000)
+        dummy.next = head
+        
+        leftprev, prev = dummy, dummy
+        current = dummy
+        
+        leftprev= current
+        for _ in range(left - 1):
+            leftprev = leftprev.next
+        
+        # set rightAfter to (Right+1) position
+        rightAfter = current
+        for _ in range(right + 1):
+            rightAfter = rightAfter.next
+        
+        # set prev to Left position
+        for _ in range(left):
+            prev = prev.next
+            
+        # set current to (Left+1) position
+        for _ in range(left+1):
+            current = current.next
+            
+        prev.next = None
+        
+        for _ in range(right - left):
+            
+            temp = current.next
+            
+            current.next = prev
+            
+            prev = current
+            
+            current = temp
+            
+        leftprev.next.next = rightAfter
+        
+        return leftprev
+        
+        
+    
+    def reverseBetween_to_list_solution(self, head: ListNode, left: int, right: int) -> ListNode:
         
         nums = self.linkedlist_to_list(head)
         
@@ -68,4 +112,4 @@ if __name__ == '__main__':
     l5.next = l6
     l6.next = l7
     
-    s.reverseBetween(l1, left=3, right=6)
+    s.reverseBetween(l1, left=2, right=6)
