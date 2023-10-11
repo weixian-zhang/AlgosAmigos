@@ -6,32 +6,28 @@ class Solution:
     
     def reverseBetween(self, head: ListNode, left: int, right: int) -> ListNode:
         
-        dummy = ListNode(-10000)
+        dummy = ListNode(-1)
         dummy.next = head
         
-        leftprev, prev = dummy, dummy
-        current = dummy
+        leftprev, prev, rightAfter = dummy, None, dummy
+        current = head
         
-        leftprev= current
+        for _ in range(left-1):
+            current = current.next
+        
         for _ in range(left - 1):
             leftprev = leftprev.next
         
         # set rightAfter to (Right+1) position
-        rightAfter = current
         for _ in range(right + 1):
-            rightAfter = rightAfter.next
+            if rightAfter.next is None:
+                break
+            else:
+                rightAfter = rightAfter.next
+    
         
-        # set prev to Left position
-        for _ in range(left):
-            prev = prev.next
-            
-        # set current to (Left+1) position
-        for _ in range(left+1):
-            current = current.next
-            
-        prev.next = None
         
-        for _ in range(right - left):
+        for _ in range(right - left + 1):
             
             temp = current.next
             
@@ -41,9 +37,15 @@ class Solution:
             
             current = temp
             
-        leftprev.next.next = rightAfter
+        tempCurr = prev
+        while tempCurr.next is not None:
+            tempCurr = tempCurr.next
+         
+        tempCurr.next =   current 
+        #leftprev.next.next = current
+        leftprev.next = prev
         
-        return leftprev
+        return dummy.next
         
         
     
@@ -102,14 +104,14 @@ if __name__ == '__main__':
     l3 = ListNode(3)
     l4 = ListNode(4)
     l5 = ListNode(5)
-    l6 = ListNode(6)
-    l7 = ListNode(7)
+    # l6 = ListNode(6)
+    # l7 = ListNode(7)
     
     l1.next = l2
     l2.next = l3
     l3.next = l4
     l4.next = l5
-    l5.next = l6
-    l6.next = l7
+    # l5.next = l6
+    # l6.next = l7
     
-    s.reverseBetween(l1, left=2, right=6)
+    s.reverseBetween(l1, left=2, right=4)
