@@ -2,9 +2,7 @@ class Solution:
     
     def simplifyPath(self, path: str) -> str:
         
-        splitted = path.split('/')
-        
-        pathSegments = [x for x in splitted if x != '' and x != '.']
+        pathSegments = [x for x in path.split('/') if x != '' and x != '.']
         
         stack = []
         
