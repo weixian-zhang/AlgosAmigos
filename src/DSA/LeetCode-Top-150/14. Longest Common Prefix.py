@@ -40,38 +40,38 @@ class Solution:
     # f| l| o| w
     # f| l| i| ght
     # space complexity: O(n + n), result and set 
-    # def longestCommonPrefix(self, strs: list[str]) -> str:
+    def longestCommonPrefix(self, strs: list[str]) -> str:
         
-    #     import sys
-    #     shortestWord = sys.maxsize
+        import sys
+        shortestWord = sys.maxsize
         
-    #     for s in strs:
-    #         shortestWord = min(shortestWord, len(s))
+        for s in strs:
+            shortestWord = min(shortestWord, len(s))
             
-    #     i, j = 0, 0
-    #     sameChar = set()
-    #     result = []
+        i, j = 0, 0
+        sameChar = set()
+        result = []
         
-    #     while i <= len(strs) - 1:
+        while i <= len(strs) - 1:
         
-    #         word = strs[i]
+            word = strs[i]
             
-    #         if j <= shortestWord - 1:
-    #             sameChar.add(word[j])
+            if j <= shortestWord - 1:
+                sameChar.add(word[j])
                     
-    #         if i == len(strs) - 1:
+            if i == len(strs) - 1:
                 
-    #             if len(sameChar) == 1:
-    #                 result.append(list(sameChar)[0])
-    #                 sameChar = set()
-    #                 i = 0
-    #                 j += 1
-    #             else:
-    #                 break
-    #         else:      
-    #             i += 1
+                if len(sameChar) == 1:
+                    result.append(list(sameChar)[0])
+                    sameChar = set()
+                    i = 0
+                    j += 1
+                else:
+                    break
+            else:      
+                i += 1
                 
-    #     return ''.join(result)
+        return ''.join(result)
                 
                 
     
