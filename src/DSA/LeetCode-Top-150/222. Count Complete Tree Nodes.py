@@ -7,32 +7,6 @@ class TreeNode:
 class Solution:
     def countNodes(self, root: TreeNode) -> int:
         
-        if not root:
-            return 0
-        
-        # def _count_node(node: TreeNode) -> int:
-            
-        #     if not node:
-        #         return 0
-            
-        #     count = 0
-        #     queue = []
-            
-        #     queue.append(node)
-            
-        #     while len(queue) > 0:
-                
-        #         n = queue.pop(0)
-                
-        #         count += 1
-                
-        #         if n.left:
-        #             queue.append(n.left)
-                    
-        #         if n.right:
-        #             queue.append(n.right)
-                    
-        #     return count
         
         def _get_height_left(node: TreeNode ) -> (int,int):
             
