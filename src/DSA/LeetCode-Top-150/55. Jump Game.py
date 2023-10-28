@@ -1,5 +1,20 @@
 class Solution:
     
+    # greedy algorithm - start from last index/destination move backwards see if previous steps allow to move ahead
+    # O(n)
+    def canJump(self, nums: list[int]) -> bool:
+        
+        goal= len(nums) - 1   # start from second last item
+        
+        for x in range(goal, -1, -1):
+            if x + nums[x] >= goal:
+                goal = x
+                
+        return True if goal == 0 else False
+
+    
+    # Dynamic programming - recursion with memoization
+    # O(n2)
     def canJump(self, nums: list[int]) -> bool:
         
         cache = {}
@@ -32,35 +47,6 @@ class Solution:
             return False
             
         return _backtrack(0)
-        
-    
-    # def canJump(self, nums: list[int]) -> bool:
-        
-    #     i = 0
-    #     stepsToJump = 0
-    #     lastIndex = len(nums) - 1
-        
-    #     while i <= lastIndex:
-            
-    #         # determine steps tp jump
-    #         if i == lastIndex:
-    #             return True
-    #         if nums[i] == 0:
-    #             return False
-    #         elif nums[i] - 1 == 0:
-    #             stepsToJump = 1
-    #         else:
-    #             stepsToJump = nums[i] - 1
-            
-    #         # jump to step with checks of over bound
-    #         if i + stepsToJump == lastIndex:
-    #             return True
-    #         elif i + stepsToJump > lastIndex:
-    #             return False
-    #         else:
-    #             i += stepsToJump
-        
-    #     return False
 
     
 s = Solution()
