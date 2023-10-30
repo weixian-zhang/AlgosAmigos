@@ -1,6 +1,9 @@
 class Solution:
     def findContentChildren(self, g: list[int], s: list[int]) -> int:
         
+        g.sort()
+        s.sort()
+        
         result = 0
         for x in range(len(s)):
             
@@ -14,22 +17,6 @@ class Solution:
                     j += 1
                 
         return result
-
-    def binary_search(self, nums, target):
-        
-        low, high = 0, len(nums) - 1
-        
-        while low <= high:
-            
-            mid = high + low // 2
-            
-            if nums[mid] <= target:
-                return mid
-            else:
-                high = mid - 1
-                
-        
-        return -1
     
     
 s = Solution()
