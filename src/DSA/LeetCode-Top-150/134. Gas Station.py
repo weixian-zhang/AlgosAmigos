@@ -1,6 +1,9 @@
 class Solution:
     
-    # greedy algorithm - make a dict of gas / cost to get "weigtage"
+    def canCompleteCircuit(self, gas: list[int], cost: list[int]) -> int:
+        pass
+    
+    # My own greedy algorithm - make a dict of gas / cost to get "weigtage"
     # then sort by highest weightage.
     # ignore weight that is < 1.0
     def canCompleteCircuit(self, gas: list[int], cost: list[int]) -> int:
