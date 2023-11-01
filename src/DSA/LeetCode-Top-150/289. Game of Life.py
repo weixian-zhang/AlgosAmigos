@@ -4,8 +4,12 @@ class Solution:
         Do not return anything, modify board in-place instead.
         """
         
-        columns = len(board[0]) - 1
-        
+        columns = len(board[0])
+
+        mirrorBoard = [[] for x in range(len(board))]
+        for x in range(len(mirrorBoard)):
+            mirrorBoard[x] = [0 for x in range(columns)]
+            
         for i in range(len(board)):
             for j in range(columns):
                 
@@ -14,29 +18,30 @@ class Solution:
                 
                 # live cell
                 if cell == 1:
-                    board[i][j] = self._live_cell_lesser_than_2(liveCells)
-                    board[i][j] = self._live_cell_larger_equals_2_3(liveCells)
-                    board[i][j] = self._live_cell_larger_3(liveCells)
+                    if liveCells < 2:
+                        cell = 0
+                    elif liveCells >= 2 and liveCells <= 3:
+                        cell = 1
+                    elif liveCells > 3:
+                        cell = 0
+                    
+                    mirrorBoard[i][j] = cell
+
                     
                 # dead cell
                 else:
-                    board[i][j] = self._dead_cell_equals_3(liveCells)
-    
-    def _live_cell_lesser_than_2(self, cells: int) -> int:
-        pass
-    
-    def _live_cell_larger_equals_2_3(self, cells: int) -> int:
-        pass
-    
-    def _live_cell_larger_3(self, cells: int) -> int:
-        pass
-    
-    def _dead_cell_equals_3(self, cells: int) -> int:
-        pass
+                    if liveCells == 3:
+                        mirrorBoard[i][j] = 1
+                    
+        
+        for i in range(len(mirrorBoard)):
+            for j in range(columns):
+                board[i][j] = mirrorBoard[i][j]
+                
     
     # m = rows
     # n = cols
-    def _get_live_cells_of_8_neightbours(board: list[list[int]], row: int, col: int):
+    def _get_live_cells_of_8_neightbours(self, board: list[list[int]], row: int, col: int):
         """returns total live cells of 8 neighbours
         """
         liveCells  = 0
@@ -44,62 +49,47 @@ class Solution:
         lowerBound = len(board) - 1
         leftBound = 0
         rightBound = len(board[0]) - 1
-        tlRow, tlCol = row, col
         
         # top left
-        if row > 0:
-            tlRow -= 1
-        if col > 0:
-            tlCol -= 1
-        liveCells += board[tlRow][tlCol]
+        if not row - 1 < upperBound and not col - 1 < leftBound:
+            liveCells += board[row - 1][col - 1]
         
         # top
-        tlRow, tlCol = row, col
-        if row > 0:
-            tlRow -= 1
-        liveCells += board[tlRow][tlCol]
+        if not row - 1 < upperBound:
+            liveCells += board[row - 1][col]
         
         # top right
-        tlRow, tlCol = row, col
-        if row > 0:
-            tlRow -= 1
-        if col < rightBound:
-            tlCol += 1
-        liveCells += board[tlRow][tlCol]
+        if not row - 1 < upperBound and not col + 1 > rightBound:
+            liveCells += board[row - 1][col + 1]
         
         # left
-        tlRow, tlCol = row, col
-        if col > 0:
-            tlCol -= 1
-        liveCells += board[tlRow][tlCol]
+        if not col - 1 < leftBound:
+            liveCells += board[row][col - 1]
         
         # right
-        tlRow, tlCol = row, col
-        if col < rightBound:
-            tlCol += 1
-        liveCells += board[tlRow][tlCol]
+        if not col + 1 > rightBound:
+            liveCells += board[row][col + 1]
         
         # bottom left
-        tlRow, tlCol = row, col
-        if row < lowerBound:
-            tlRow += 1
-        if col > 0:
-            tlCol -= 1
-        liveCells += board[tlRow][tlCol]
+        if not row + 1 > lowerBound and not col - 1 < leftBound:
+            liveCells += board[row + 1][col - 1]
         
         # bottom
-        tlRow, tlCol = row, col
-        if row < lowerBound:
-            tlRow += 1
-        liveCells += board[tlRow][tlCol]
+        if not row + 1 > lowerBound:
+            liveCells += board[row + 1][col]
         
         # bottom right
-        tlRow, tlCol = row, col
-        if row < lowerBound:
-            tlRow += 1
-        if col < rightBound:
-            tlCol += 1
-        liveCells += board[tlRow][tlCol]
+        if not row + 1 > lowerBound and not col + 1 > rightBound:
+            liveCells += board[row + 1][col + 1]
         
         return liveCells
+    
+board = [[0,0,0,0],[0,1,1,0],[0,1,1,0],[0,0,0,0]]
+#[[0,1,0],[0,0,1],[1,1,1],[0,0,0]]
+
+s = Solution()
+
+s.gameOfLife(board)
+
+print(board)
     
