@@ -5,6 +5,14 @@ class Solution:
         if len(intervals) == 0:
             return [newInterval]
         
+        if newInterval[1] < intervals[0][0]:
+            intervals.insert(0, newInterval)
+            return intervals
+        
+        if newInterval[0] > intervals[-1][1]:
+            intervals.append(newInterval)
+            return intervals
+        
         # make a copy of interval to pop
         copiedInterval = intervals.copy()
         overlapIntervals = []
@@ -19,7 +27,7 @@ class Solution:
                 i += 1
             
     
-        mergedInterval = []
+        mergedInterval = newInterval
         
         if len(overlapIntervals) > 0:
     
@@ -47,22 +55,16 @@ class Solution:
             
             mergedInterval = [headMergedInterval, tailMergedInterval]
             
-        else:
-            mergedInterval = newInterval
-            
             
         # insert the newly merged interval into original "head" and "tail"
         if len(copiedInterval) == 0:
             return [mergedInterval]
         
-        # i = 0
-        # while i <= len(copiedInterval) - 1:
-        #     if mergedInterval[0] < copiedInterval[i][0]:
-        #         copiedInterval.insert(i, mergedInterval)
-        #     elif 
+
         for idx, i in enumerate(copiedInterval):
             if mergedInterval[0] < i[0]:
                 copiedInterval.insert(idx, mergedInterval)
+                break
                 
         if mergedInterval[0] > copiedInterval[-1][0]:
             copiedInterval.append(mergedInterval)
@@ -81,7 +83,9 @@ class Solution:
 
 
 s = Solution()
-print(s.insert([[1,3],[6,9]],[2,5]))
+print(s.insert([[1,5]], [6,8]))
+# print(s.insert([[1,5]], [2,3]))
+# print(s.insert([[1,3],[6,9]],[2,5]))
 # print(s.insert([[1,5]],[6,8]))
 # print(s.insert([[1,5]],[2,3]))
 # print(s.insert([], [5,7]))
