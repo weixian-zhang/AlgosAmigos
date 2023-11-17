@@ -1,3 +1,3 @@
 #### AlgosAmigos  
 
-Having fun with DSA
+Having fun with Data Structures and Algorithms
