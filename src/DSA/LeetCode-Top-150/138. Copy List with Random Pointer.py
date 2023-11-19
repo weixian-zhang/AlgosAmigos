@@ -5,40 +5,48 @@ class Node:
         self.val = int(x)
         self.next = next
         self.random = random
-
+import copy
 class Solution:
     def copyRandomList(self, head: Node) -> Node:
         
         dummy = Node(-1)
-        dummyPointer = dummy
-        nodeIndexer = {}
+        curr_dummy = dummy
+
+        oldToCopyTracker = { None: None }
+
         curr = head
 
         while curr:
+            
+            cNode = Node(curr.val)
 
-            if curr.next:
-                dummyPointer.next = Node(x=curr.val, next=Node(curr.next.val), random=curr.random)
-            else:
-                dummyPointer.next = Node(x=curr.val, next = None, random=curr.random)
+            oldToCopyTracker[curr] = cNode
+            
+            curr = curr.next  
 
-            nodeIndexer[hash(dummyPointer.next)] = dummyPointer.next
-
-            dummyPointer = dummyPointer.next
-            curr = curr.next
-
-        curr = dummy.next
+        curr = head
 
         while curr:
+            
+            nextNode = oldToCopyTracker[curr.next]
+            randNode = oldToCopyTracker[curr.random]
 
-            if curr.random:
-                randomNode = nodeIndexer[hash(curr.random)]
-                curr.random = randomNode
-            else:
-                curr.random = None
+            currCopyNode = oldToCopyTracker[curr]
+            currCopyNode.next = nextNode
+            currCopyNode.random = randNode
 
             curr = curr.next
 
-        return dummy.next
+        return oldToCopyTracker[head]
+
+                
+                
+
+            
+
+            
+            
+    
 
 
 #[[3,null],[3,0],[3,null]]
@@ -49,6 +57,11 @@ l10 = Node(10, l1, Node(11))
 l11 = Node(11, l10, Node(1))
 l13 = Node(13, l11, Node(7))
 l7 = Node(7, l13, None)
+
+l13.random = l7
+l11.random = l1
+l10.random = l11
+l1.random = l7
 
 
 s = Solution()
