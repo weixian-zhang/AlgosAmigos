@@ -49,20 +49,38 @@ class Solution:
             dist = distTracker[x][0]
             result[x] = dist if dist != sys.maxsize else -1
 
-        return result
+        # travese shortest path with previous node stored in distTracker
+        src = 0
+        dest = 3
+        path = self.get_print_shortest_path(src, dest, distTracker)
+        path = path[::-1]
+        print(' -> '.join([str(x) for x in path]))
 
+        return result
+    
+    def get_print_shortest_path(self,src, dest, distTracker: dict):
+        
+        
+        prev = distTracker[dest][1]
+        path = [dest, prev]
+
+        while prev != src:
+            prev = distTracker[prev][1]
+            path.append(prev)
+
+        return path
 
                 
 
         
 
-# n = 5
-# edges = [[0,1,10], [0,2,3], [1,3,2], [2,1,4], [2,3,8], [2,4,2], [3,4,5]]
-# src = 0
+n = 5
+edges = [[0,1,10], [0,2,3], [1,3,2], [2,1,4], [2,3,8], [2,4,2], [3,4,5]]
+src = 0
 
-n=4
-edges=[[0,1,5],[0,2,7],[1,2,2],[1,3,6],[2,3,4]]
-src=1
+# n=4
+# edges=[[0,1,5],[0,2,7],[1,2,2],[1,3,6],[2,3,4]]
+# src=1
 
 s = Solution()
 s.shortestPath(n, edges, src)
