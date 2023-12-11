@@ -2,33 +2,31 @@ class Solution:
     def combine(self, n: int, k: int) -> list[list[int]]:
         
         result = []
-        
-        nums = [x for x in range(1, n+1)]
-        
-        def _backtrack(nums, tempArr: list[int]):
-            
-            #base case
-            if len(tempArr) == k:
-                result.append(tempArr.copy())
-                return
 
-            for idx, x in enumerate(nums):
-                
-                tempArr.append(x)
-                
-                _backtrack(nums[idx+1:], tempArr)
-                
-                # backtracked
-                tempArr.pop()
-                
-                
+        def backtrack(nums: list[int], tempCombo: list[int]):
             
-        _backtrack(nums, [])
-        
+            # base case
+            if len(tempCombo) == k:
+                result.append(tempCombo.copy())
+                return
+            
+            for idx, x in enumerate(nums):
+
+                tempCombo.append(x)
+
+                backtrack(nums[idx + 1:], tempCombo)
+
+                tempCombo.pop()
+
+        nums = [x for x in range(1, n + 1, 1)]
+
+        backtrack(nums, [])
+
         return result
-    
-    
-    
-if __name__ == '__main__':
-    s = Solution()
-    s.combine(4, 2)
+
+
+
+s = Solution()
+print(s.combine(4, 2))
+print(s.combine(1, 1))
+print(s.combine(6, 3))
