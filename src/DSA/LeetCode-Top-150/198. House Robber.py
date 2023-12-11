@@ -1,24 +1,24 @@
 class Solution:
 
     # top-down, recursion + memoization
-    # def rob(self, nums: list[int]) -> int:
+    def rob(self, nums: list[int]) -> int:
         
-    #     maxRob = 0
-    #     dpCache = {}
-    #     def recurse(idx: int):
+        maxRob = 0
+        dpCache = {}
+        def recurse(idx: int):
 
-    #         if idx > len(nums) - 1:
-    #             return 0
+            if idx > len(nums) - 1:
+                return 0
             
-    #         if idx in dpCache:
-    #             return dpCache[idx]
+            if idx in dpCache:
+                return dpCache[idx]
             
-    #         dpCache[idx] = max(nums[idx] + recurse(idx + 2), recurse(idx + 1))
-    #         return dpCache[idx]
+            dpCache[idx] = max(nums[idx] + recurse(idx + 2), recurse(idx + 1))
+            return dpCache[idx]
 
-    #     recurse(0)
+        recurse(0)
         
-    #     return maxRob
+        return maxRob
     
 
     def rob(self, nums: list[int]) -> int:
