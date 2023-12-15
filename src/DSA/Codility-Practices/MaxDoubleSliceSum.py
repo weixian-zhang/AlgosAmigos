@@ -27,7 +27,11 @@ def solution(A):
     
     return maxSumOf2Slices
 
-# brute force between X <-> Y <-> Z
+# brute force
+# correctness 88%
+# X <-> Y <-> Z
+# Y pointer will move from X+1 to Z-1, as Y moves, it partitions the slice into 2 partition X-Y and Y-Z
+# summing left partition and 1 num each on right partition
 def solution(A):
 
     if len(A) <= 3:
@@ -36,7 +40,7 @@ def solution(A):
     max_sum = 0
     x = 0
     y = 1
-    z = len(A) - 1
+    z = len(A) - 2
 
     while x <= y <= z:
 
@@ -75,7 +79,8 @@ def solution(A):
 # def solution(A):
 #     pass
 
-print(solution([6, 1, 5, 6, 4, 2, 9, 4]))
+print(solution([-2, -3, -4, 1, -5, -6, -7]))
+# print(solution([6, 1, 5, 6, 4, 2, 9, 4]))
 # print(solution([0,10,-5,-5,0]))
 # print(solution([5, 0, 1, 0, 5]))
 # print(solution([5, 5, 5]))
