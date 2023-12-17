@@ -1,33 +1,51 @@
 # you can write to stdout for debugging purposes, e.g.
 # print("this is a debug message")
 
+# https://www.youtube.com/watch?v=wJizpN0HAyA
+# very ambiguous 
 def solution(H):
+    stack = []  # Stack to keep track of heights
+    blocks_needed = 0  # Number of blocks needed
 
-    if len(H) == 1:
-        return 1
+    for height in H:
+        # Pop blocks from the stack until the condition is satisfied
+        while stack and height < stack[-1]:
+            stack.pop()
 
-    # Implement your solution here
-    minHeight = max(H[0], H[-1])
-    blocks = 1
-    lowBlocks = []
+        # If the stack is empty or the current height is not equal to the top of the stack
+        if not stack or height != stack[-1]:
+            blocks_needed += 1
+            stack.append(height)
 
-    for x in range(1, len(H)):
+    return blocks_needed
 
-        height = H[x]
+# def solution(H):
 
-        if lowBlocks:
-            if sum(lowBlocks) + height >= minHeight:
-                blocks += 1
-                lowBlocks = []
-            else:
-                lowBlocks.append(height)
-        else:
-            if height >= minHeight:
-                blocks += 1
-            else:
-                lowBlocks.append(height)
+#     if len(H) == 1:
+#         return 1
 
-    return blocks
+#     # Implement your solution here
+#     minHeight = max(H[0], H[-1])
+#     blocks = 1
+#     lowBlocks = []
+
+#     for x in range(1, len(H)):
+
+#         height = H[x]
+
+#         if lowBlocks:
+#             if sum(lowBlocks) + height >= minHeight:
+#                 blocks += 1
+#                 lowBlocks = []
+#             else:
+#                 lowBlocks.append(height)
+#         else:
+#             if height >= minHeight:
+#                 blocks += 1
+#             else:
+#                 lowBlocks.append(height)
+
+#     return blocks
 
 
 
