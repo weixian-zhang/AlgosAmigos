@@ -7,24 +7,51 @@
     #The string contains 15 different letters
 # Write an efficient algorithm for the following assumptions:
 # N is an integer within the range [1. 200,000]
-        
+
 def solution(N):
     import string
 
     a_z = string.ascii_lowercase
 
-    lettersToRepeat = ''
-
+    numOfLettersToRepeat = ''
     if N <= 26:
-        lettersToRepeat = ''.join(a_z[:N])
-    else:
-        remainder = ''.join(a_z[: N % 26])
-        lettersToRepeat = ''.join(a_z * (N // 26))
-        lettersToRepeat += remainder
+        numOfLettersToRepeat = ''.join(a_z[:N])
+        return numOfLettersToRepeat
+    
+    numOfLettersToRepeat = N
+    while numOfLettersToRepeat > 26:
+        numOfLettersToRepeat = numOfLettersToRepeat // 2
 
-    sortedResult = ''.join(sorted(lettersToRepeat))
+    lettersRepeating = ''.join(a_z[:numOfLettersToRepeat])
+    
+
+    while len(lettersRepeating) + numOfLettersToRepeat <= N:
+        lettersRepeating += a_z[:numOfLettersToRepeat]
+
+    remainders = N - len(lettersRepeating)
+    lettersRemaining = a_z[:remainders]
+
+    sortedResult = ''.join(sorted(lettersRepeating + lettersRemaining))
 
     return sortedResult
+
+# def solution(N):
+#     import string
+
+#     a_z = string.ascii_lowercase
+
+#     numOfLettersToRepeat = ''
+
+#     if N <= 26:
+#         lettersToRepeat = ''.join(a_z[:N])
+#     else:
+#         remainder = ''.join(a_z[: N % 26])
+#         lettersToRepeat = ''.join(a_z * (N // 26))
+#         lettersToRepeat += remainder
+
+#     sortedResult = ''.join(sorted(lettersToRepeat))
+
+#     return sortedResult
         
 # def solution(N):
 #     import string
@@ -52,5 +79,6 @@ def solution(N):
 # print(len(solution(3)))
 # print(len(solution(5)))
 # print(len(solution(30)))
-print(len(solution(60)))
-print(len(solution(1000)))
+# print(len(solution(60)))
+# print(len(solution(1000)))
+print(len(solution(703)))
