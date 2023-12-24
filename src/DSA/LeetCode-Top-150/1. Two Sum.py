@@ -1,16 +1,17 @@
 class Solution:
     def twoSum(self, nums: list[int], target: int) -> list[int]:
-        diffIdx = {}
-        
-        for x in range(len(nums)):
-            diff = target - nums[x]
-            if diff not in diffIdx:
-                diffIdx[nums[x]] = x
+        diffMap = {}
+        N = len(nums)
+
+        for x in range(N):
+            diff =  target - nums[x]
+            if nums[x] not in diffMap:
+                diffMap[diff] = x
             else:
-                
-                return [diffIdx[diff], x]
-    
-    
-if __name__ == '__main__':
-    s = Solution()
-    print(s.twoSum([2,7,11,15], 9))
+                return [diffMap[nums[x]], x]
+
+
+
+s = Solution()
+print(s.twoSum([2,7,11,15], 9))
+print(s.twoSum([3,2,4], 6))
