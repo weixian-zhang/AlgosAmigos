@@ -123,6 +123,24 @@ class BinarySearchTree:
             _delete(self.root, self.root, deletedNodes)
 
         return deletedNodes
+    
+    def height(self):
+
+        def _height(node: TreeNode):
+            if not node:
+                return 0
+            
+            # leftHeight = 1 + _height(node.left)
+
+            # rightHeght = 1 + _height(node.right)
+
+            # h = max(leftHeight, rightHeght)
+            
+            # rewrite as
+            return max( 1 + _height(node.left), 1 + _height(node.right))
+
+        h = _height(self.root)
+        return h -1
 
 
 bst = BinarySearchTree()
@@ -136,5 +154,6 @@ bst.insert(7)
 
 bst.print()
 
-print(bst.delete_leaf_nodes_with_return())
+print(bst.height())
+# print(bst.delete_leaf_nodes_with_return())
 # print(bst.delete_leaf_nodes_WithOut_return())
