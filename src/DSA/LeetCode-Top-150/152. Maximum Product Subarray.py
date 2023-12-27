@@ -15,7 +15,7 @@ class Solution:
 
         return maxProd
     
-    # bottom up DP
+    # neetcode - bottom up DP
     def maxProduct(self, nums: list[int]) -> int:
 
         #nums = [1] + nums   # add dummy 1 in front
@@ -40,7 +40,34 @@ class Solution:
             result = max(result, minSoFar, maxSoFar)
 
         return result
-                
+    
+
+    def maxProduct(self, nums: list[int]) -> int:
+        
+        N = len(nums)
+        
+        result = max(nums)
+        prevCurr = nums[0]
+        prodSoFar = nums[0]
+
+        for x in range(1, N):
+
+            if nums[x] == 0:
+                prodSoFar = 1
+                prev = 1
+                continue
+
+            curr = nums[x]
+
+            tempProdOfPrev = prevCurr
+
+            prevCurr = curr * nums[x - 1] 
+
+            prodSoFar *= curr
+
+            result = max(result, curr, prevCurr, curr * tempProdOfPrev, prodSoFar)
+
+        return result
 
         
 
