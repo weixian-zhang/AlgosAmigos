@@ -1,53 +1,46 @@
 
-def merge_sort(nums):
+def merge_sort(nums: list[int]):
+
+    def merge(left, right):
+
+        merge = []
+        i, j = 0, 0
+        while i <= len(left) - 1 and j <= len(right) - 1:
+
+            if left[i] <= right[j]:
+                 merge.append(left[i])
+                 i += 1
+            else:
+                merge.append(right[j])
+                j += 1
+
+        # refactor to use list.extend
+        merge.extend(left[i:])
+        merge.extend(right[j:])
+
+        return merge
     
-    
-    def _merge_sort(nums):
-        
+    def _mergeSort(nums: list[int]):
+        import math
+
         if len(nums) <= 1:
             return nums
         
-        mid = len(nums) // 2
+        mid =  math.floor(len(nums) // 2)
+
+        left = nums[:mid]
+
+        right = nums[mid:]
+
+        left = _mergeSort(left)
+
+        right = _mergeSort(right)
+
+        return merge(left, right)
+
         
-        left = _merge_sort(nums[:mid])
-        
-        right = _merge_sort(nums[mid:])
-        
-        return _sort(left, right)
-    
+    return _mergeSort(nums)
 
 
-    def _sort(left, right) -> list[int]:
-        
-        temp = []
-        i, j = 0, 0
-        
-        while i <= len(left)-1 and j <= len(right)-1:
-            
-            if left[i] <= right[j]:
-                temp.append(left[i])
-                i += 1
-            elif right[j] <= left[i]:
-                temp.append(right[j])
-                j += 1
-                
-        
-        # add leftover from left to temp
-        while i <= len(left)-1:
-            temp.append(left[i])
-            i += 1
-            
-        # add leftover from right to temp
-        while j <= len(right)-1:
-            temp.append(right[j])
-            j += 1
-            
-        
-        return temp
-    
-    return _merge_sort(nums)
 
-
-if __name__ == '__main__':
-    
-    print(merge_sort([100,92,6,31,3,55])) #[23,92,98,31,3,24]
+print(merge_sort([2,8,5,3,9,4,1,7]))
