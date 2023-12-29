@@ -17,6 +17,28 @@ class Graph:
 
         _dfs(list(g.keys())[0], [])
 
+    
+    def bfs(self, g: dict):
+        from collections import defaultdict
+
+        visited = []
+        queue = []
+
+        queue.append(list(g.keys())[0])
+
+        while queue:
+
+            node = queue.pop(0)
+            visited.append(node)
+
+            print(node)
+
+            for neighbour in g[node]:
+                if neighbour not in visited:
+                    queue.append(neighbour)
+
+
+
 
 g = {
     0: [1,2,3],
@@ -26,4 +48,5 @@ g = {
     4: [2]
 }
 graph = Graph()
-graph.dfs(g)
+# graph.dfs(g)
+graph.bfs(g)
