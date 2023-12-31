@@ -52,14 +52,31 @@ class Graph:
     def create_adjacency_matrix(self, n, edges: list[list]):
 
 
-        matrix = [[0] * n for _ in range(n)]
+        self.matrix = [[0] * n for _ in range(n)]
 
         for i in range(len(edges)):
             src = self.nodeIdxMap[edges[i][0]]
             dest = self.nodeIdxMap[edges[i][1]]
-            matrix[src][dest] = 1
+            self.matrix[src][dest] = 1
+            self.matrix[dest][src] = 1
 
-        print(matrix)
+    def adj_matrix_dfs(self, startNode: int):
+
+        visited = []
+
+        def dfs(startNode: int):
+
+            visited.append(startNode)
+
+            print(startNode)
+
+            for nIdx in range(len(self.matrix[startNode])):
+                if nIdx not in visited and self.matrix[startNode][nIdx] == 1:
+                    dfs(nIdx)
+
+        dfs(startNode)
+
+    
 
 
 
@@ -80,4 +97,6 @@ graph.add_node_adj_matrix(1)
 graph.add_node_adj_matrix(2)
 graph.add_node_adj_matrix(4)
 graph.add_node_adj_matrix(8)
-graph.create_adjacency_matrix(5,[[0, 1], [1,4], [2,4],[2,8]])
+graph.create_adjacency_matrix(5,[[0, 1], [1,4], [2,4],[2,8],[8,0]])
+
+graph.adj_matrix_dfs(0)
