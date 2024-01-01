@@ -19,14 +19,18 @@ def solution(N):
         return numOfLettersToRepeat
     
     numOfLettersToRepeat = N
+    timeToRepeat = 1
     while numOfLettersToRepeat > 26:
+        timeToRepeat *= 2
         numOfLettersToRepeat = numOfLettersToRepeat // 2
 
     lettersRepeating = ''.join(a_z[:numOfLettersToRepeat])
+
+    lettersRepeating *= (timeToRepeat + 1)
     
 
-    while len(lettersRepeating) + numOfLettersToRepeat <= N:
-        lettersRepeating += a_z[:numOfLettersToRepeat]
+    # while len(lettersRepeating) + numOfLettersToRepeat <= N:
+    #     lettersRepeating += a_z[:numOfLettersToRepeat]
 
     remainders = N - len(lettersRepeating)
     lettersRemaining = a_z[:remainders]
@@ -80,5 +84,5 @@ def solution(N):
 # print(len(solution(5)))
 # print(len(solution(30)))
 # print(len(solution(60)))
-# print(len(solution(1000)))
+print(len(solution(1000)))
 print(len(solution(703)))
