@@ -20,39 +20,36 @@ class Solution:
 
     # prefix sum + reverse math Sum - K the nkeep track of prefix sum count
     def subarraySum(self, nums: list[int], k: int) -> int:
+        from collections import defaultdict
 
-        N = len(nums)
-
-        subarrays = 0
+        result = 0
         prefixSum = 0
-        cumuSums = {}
+        cumuSum = defaultdict(int)
+        cumuSum[0] = 1
 
-        for x in range(N):
-
-            prefixSum += nums[x]
-
-            if prefixSum == k:
-                subarrays += 1
-
-            if (prefixSum - k) in cumuSums:
-                subarrays += cumuSums[prefixSum - k]
+        for x in nums:
             
-            if prefixSum not in cumuSums:
-                 cumuSums[prefixSum] = 1 
-            else:
-                cumuSums[prefixSum] += 1
+            prefixSum += x
+            
+            if prefixSum - k in cumuSum:
+                result += cumuSum[prefixSum-k]
 
-        return subarrays
+            if prefixSum not in cumuSum:
+                cumuSum[prefixSum] = 1
+            else:
+                cumuSum[prefixSum] += 1
+
+        return result
 
 
 s = Solution()
 # print(s.subarraySum([100,1,2,3,100,1,2,3,4], 3))
 # print(s.subarraySum([5, 0, 0, 0, 2, 3], 0))
 # print(s.subarraySum([100,1,2,3,4], 6)) # 1
-print(s.subarraySum([1, -1, 0], 0))     # 3
+# print(s.subarraySum([1, -1, 0], 0))     # 3
 # print(s.subarraySum([1], 1))
 # print(s.subarraySum([-1, -1, 1], 0))
 # print(s.subarraySum([1], 0))
 # print(s.subarraySum([1,1,1], 2))
 # print(s.subarraySum([1,2,3], 3))
-# print(s.subarraySum([1,7,4,3,5,0,2,10], 7))
+print(s.subarraySum([1,7,4,3,5,0,2,10], 7))
