@@ -1,45 +1,53 @@
 
 def merge_sort(nums: list[int]):
 
-    def merge(left, right):
+    def _merge(left: list, right: list) -> list:
+        
+        merged = []
 
-        merge = []
         i, j = 0, 0
-        while i <= len(left) - 1 and j <= len(right) - 1:
 
-            if left[i] <= right[j]:
-                 merge.append(left[i])
-                 i += 1
+        while i <= len(left) - 1 and j <= len(right) - 1:
+            if left[i] < right[j]:
+                merged.append(left[i])
+                i += 1
             else:
-                merge.append(right[j])
+                merged.append(right[j])
                 j += 1
 
-        # refactor to use list.extend
-        merge.extend(left[i:])
-        merge.extend(right[j:])
+        merged += left[i:]
 
-        return merge
-    
-    def _mergeSort(nums: list[int]):
-        import math
+        merged += right[j:]
+
+        return merged
+
+    def _merge_sort(nums: list) -> list:
 
         if len(nums) <= 1:
             return nums
         
-        mid =  math.floor(len(nums) // 2)
+        mid = len(nums) // 2
 
         left = nums[:mid]
 
         right = nums[mid:]
 
-        left = _mergeSort(left)
+        left = _merge_sort(left)
 
-        right = _mergeSort(right)
+        right = _merge_sort(right)
 
-        return merge(left, right)
+        merged = _merge(left, right)
+
+        return merged
+    
+    sortedNums = _merge_sort(nums)
+
+    return sortedNums
 
         
-    return _mergeSort(nums)
+
+    
+
 
 
 
