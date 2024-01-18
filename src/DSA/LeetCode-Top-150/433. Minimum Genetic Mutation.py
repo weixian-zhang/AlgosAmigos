@@ -1,5 +1,7 @@
 from typing import List
 
+# Runtime: 33 ms, faster than 84.14% of Python3 online submissions for Minimum Genetic Mutation.
+# Memory Usage: 17.4 MB, less than 25.20% of Python3 online submissions for Minimum Genetic Mutation.
 class Solution:
     def minMutation(self, startGene: str, endGene: str, bank: List[str]) -> int:
         from collections import deque
