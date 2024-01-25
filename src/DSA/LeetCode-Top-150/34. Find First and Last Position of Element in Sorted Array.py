@@ -64,8 +64,41 @@ class Solution:
         return [leftPartIdx, rightPartIdx]
 
 
+# neetcode solution
+# Runtime: 81 ms, faster than 55.06% of Python3 online submissions for Find First and Last Position of Element in Sorted Array.
+# Memory Usage: 17.8 MB, less than 67.45% of Python3 online submissions for Find First and Last Position of Element in Sorted Array.
+class Solution:
+    def searchRange(self, nums: List[int], target: int) -> List[int]:
+        left = self.binSearch(nums,target, True)
+        right = self.binSearch(nums,target, False)
+
+        return [left, right]
+
+    def binSearch(self, nums, target, leftBias):
+
+        l, r = 0, len(nums) - 1
+        i = -1
+
+        while l <= r:
+
+            m = (r + l) // 2
+
+            if target > nums[m]:
+                l = m + 1
+            elif target < nums[m]:
+                r = m - 1
+            else:
+                i = m
+                if leftBias:
+                    r = m - 1
+                else:
+                    l = m + 1
+
+        return i
+
+
 s = Solution()
-print(s.searchRange([1,1,1,1,1,1,2,3,4,4,5,5,5,6,7,8,8,8,8], 8))
+print(s.searchRange([1,1,1,1,1,1,2,3,4,4,5,5,5,6,7,8,8,8,8,8,8,8], 8))
 print(s.searchRange([3,3,3], 3))
 # print(s.searchRange([1,2,3,3,3,4,5,6], 3))
 print(s.searchRange([1], 0))
