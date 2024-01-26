@@ -25,6 +25,12 @@ class Heap:
             nums[index], nums[-1] = nums[-1], nums[index]
             nums.pop()
             self.heapify_max(nums)
+
+    def _heapify_up(nums, idx):
+        pass
+
+    def _heapify_down(nums, idx):
+        pass
             
     
     def heapify_max(self, nums: list[int], index: int = -1):
