@@ -49,7 +49,7 @@ class Solution:
 
         return water
     
-    # solution - also 2 pointers
+    # techdose solution - also 2 pointers
     def trap(self, height: List[int]) -> int:
         
 
