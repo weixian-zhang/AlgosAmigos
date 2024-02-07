@@ -2,9 +2,22 @@
 
 class Solution:
   def k_most_frequent(arr, k):
-    pass
+    from collections import defaultdict
 
+    kTracker = defaultdict(int)
+
+    for x in arr:
+      kTracker[x] = kTracker[x] + 1
+
+        
+    kTupleList = sorted(kTracker.items(), key = lambda x: x[1], reverse=True)
+
+    kSortedList = [x[0] for x in kTupleList]
+
+    result = kSortedList[:k]
+
+    return result
 
 s = Solution
-print(s.k_most_frequent( {3, 1, 4, 4, 5, 2, 6, 1}, K = 2))
+print(s.k_most_frequent( [3, 1, 4, 4, 5, 2, 6, 1], 2))
 
