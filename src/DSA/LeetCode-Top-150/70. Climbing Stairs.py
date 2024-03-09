@@ -1,21 +1,31 @@
 class Solution:
     def climbStairs(self, n: int) -> int:
-        
-        dp = [0 for x in range(n + 1)]
-        dp[-2] = 1
-        dp[-1] = 1
+
+            cache = {}
+
+            def recursion(step: int):
+                                
+                if step > n:
+                    return 0
+                
+                if step == n:
+                    return 1
+                
+                if step in cache:
+                     return cache[step]
+
+                cache[step] = recursion(step + 1) + recursion(step + 2)
+
+                return cache[step]
 
 
-        for x in range(len(dp) - 3, -1,  -1):
-            dp[x] = dp[x + 2] + dp[x + 1]
+            ways = recursion(0)
 
-        return dp[0]
-
-
+            return ways
 
 
 s = Solution()
 print(s.climbStairs(2))
-# print(s.climbStairs(3))
-# print(s.climbStairs(6))
+print(s.climbStairs(3))
+print(s.climbStairs(5))
 # print(s.climbStairs(11))
