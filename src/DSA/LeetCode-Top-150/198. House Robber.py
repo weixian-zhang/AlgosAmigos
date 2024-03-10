@@ -1,91 +1,72 @@
+from typing import List
+
 class Solution:
 
-    # top-down, recursion + memoization
+    # brute force - Time Limit Exceeded
     def rob(self, nums: list[int]) -> int:
         
-        maxRob = 0
-        dpCache = {}
-        def recurse(idx: int):
+        cache = {}
+        maxMoney = 0
 
-            if idx > len(nums) - 1:
-                return 0
-            
-            if idx in dpCache:
-                return dpCache[idx]
-            
-            dpCache[idx] = max(nums[idx] + recurse(idx + 2), recurse(idx + 1))
-            return dpCache[idx]
+        def dfs(i: int, currMoney):
+            nonlocal maxMoney
 
-        recurse(0)
+            if i > len(nums) - 1:
+                return
+            
+            if i in cache and cache[i] > maxMoney:
+                return cache[i]
+
+            currMoney += nums[i]
+            
+            maxMoney = max(maxMoney, currMoney)
+
+            dfs(i + 2, currMoney)
+
+            dfs(i + 3, currMoney)
+
+            cache[i] = maxMoney
+            
+        dfs(0, 0)
+
+        dfs(1, 0)
         
-        return maxRob
+        return maxMoney
+
+    def rob(self, nums: List[int]) -> int:
+        
+        self.memo = {}
+        
+        return self.robFrom(0, nums)
     
-
-    def rob(self, nums: list[int]) -> int:
-
-        if not nums:
+    def robFrom(self, i, nums):
+        
+        # No more houses left to examine.
+        if i >= len(nums):
             return 0
-        if len(nums) == 1:
-            return nums[0]
-
-        dp = [0 for x in range(len(nums))]
-
-        dp[0] = nums[0]
-        dp[1] = max(nums[0], nums[1])
-
-        for x in range(2, len(nums), 1):
-            dp[x] = max(nums[x] + dp[x - 2], dp[x - 1])
-
-        return dp[-1]
-
-
-    # my solution - exceed time complexity
-    # def rob(self, nums: list[int]) -> int:
         
-    #     if not nums:
-    #         return 0
-    #     if len(nums) == 1:
-    #         return nums[0]
+        # Return cached value.
+        if i in self.memo:
+            return self.memo[i]
+
+        one = self.robFrom(i + 1, nums)
+
+        onePlus2 = self.robFrom(i + 2, nums) + nums[i]
+
+        ans = max(one, onePlus2)
         
-    #     maxRob = 0
-    #     tempRob = 0
-    #     dpCache = {}
-
-    #     def recurse(idx: int):
-    #         nonlocal maxRob
-    #         nonlocal tempRob
-
-    #         if idx < 0:
-    #             return tempRob
-            
-    #         tempRob += nums[idx]
-
-    #         if idx in dpCache :
-    #             return dpCache[idx]
-
-    #         recurse(idx - 2)
-
-    #         #recurse(idx - 3)
-
-    #         maxRob = max(tempRob, maxRob)
-            
-    #         dpCache[idx] = tempRob
-                    
-    #         tempRob -= nums[idx]
+        # Recursive relation evaluation to get the optimal answer.
+        # ans = max(self.robFrom(i + 1, nums), self.robFrom(i + 2, nums) + nums[i])
         
-    #     for x in range(len(nums)-1, -1, -1):
-    #         recurse(x)
-    #         tempRob = 0
+        # Cache for future use.
+        self.memo[i] = ans
+        return ans
 
-    #     return maxRob
 
 s = Solution()
-# print(s.rob([6,6,4,8,4,3,3,10]))
-#print(s.rob([1,2,1,1]))
-# print(s.rob([4,1,2,7,5,3,1]))
-print(s.rob([2,1,1,2]))  # 4
+# print(s.rob([1,2,1,1]))
+# print(s.rob([1,2]))
+# print(s.rob([2,1,1,2]))
 # print(s.rob([1,1]))
-# print(s.rob([]))
-# print(s.rob([10]))    #10
-# print(s.rob([1,2,3,1]))    #4
-# print(s.rob([2,7,9,3,1]))  #12
+print(s.rob([1,2,3,1]))
+# print(s.rob([2,7,9,3,1]))
