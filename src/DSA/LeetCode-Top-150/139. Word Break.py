@@ -80,15 +80,36 @@ class Solution:
                 return False
                 
         return dfs(0)
+    
+
+    # dp bottom up
+    def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+        
+        S = len(s) - 1
+        dp = [False] * (len(s) + 1)
+        dp[-1] = True
+
+        for x in range(len(s) - 1, -1, -1):
+            for w in wordDict:
+                if (x + len(w)) <= len(s) and s[x: x + len(w)] == w:
+                    dp[x] = dp[x + len(w)]
+            
+                if dp[x]:
+                    break
+
+        return dp[0]
+                    
+                
+
 
 
     
 s = Solution()
 print(s.wordBreak("catsandogcat", ["cats","dog","sand","and","cat","an"]))
-# print(s.wordBreak('cars', ["car","ca","rs"]))
+print(s.wordBreak('cars', ["car","ca","rs"]))
 # print(s.wordBreak('a', ["b"]))
-# print(s.wordBreak('leetcode', ["leet","code"]))
+print(s.wordBreak('leetcode', ["leet","code"]))
 # print(s.wordBreak('applepenapple', ["pen","apple"]))
-# print(s.wordBreak('catsandog', ["cats","dog","sand","and","cat"]))
+print(s.wordBreak('catsandog', ["cats","dog","sand","and","cat"]))
 # print(s.wordBreak('aaaaaaa', ["aaaa","aaa"]))
 #print(s.wordBreak('dadasdbcapokoqp', ["bca"]))
