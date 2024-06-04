@@ -36,11 +36,7 @@ class Solution:
         return arr[-1]
 
     
-    from collections import Counter
 
-    a = Counter('anagram')
-    b = Counter('naagram')
-    pass
     # log(n) - binary search
     # def findSpecialInteger(self, arr: List[int]) -> int:
 
