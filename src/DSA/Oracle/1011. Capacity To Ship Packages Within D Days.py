@@ -2,7 +2,7 @@ from typing import List
 
 class Solution:
 
-    # brute force
+    # brute force - time limit exceeded 
     def shipWithinDays(self, weights: List[int], days: int) -> int:
         
         # brute force try each capacity/total weights to set for ship to take in per day
