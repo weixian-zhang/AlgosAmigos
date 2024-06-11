@@ -58,38 +58,34 @@ class Solution:
 
         # going into this function, means into 1 cell, and foreach cell,
         # explore up,down,left,right cells
-        def dfs(chars: str, i: int, j: int):
+        def dfs(chars: str, i: int, j: int, node: TrieNode):
 
-            visited.add((i, j))
-
-            # base case 1
-            if not trie.starts_with(chars):
+            # base case
+            if ((i, j) in visited or
+                i < 0 or j < 0 or
+                i > (R-1) or j > (C-1) or
+                board[i][j] not in node.children
+                ):
                 return
             
-            # base case 2
-            if trie.search(chars):
+            visited.add((i, j))
+
+            chars += board[i][j]
+            
+            node = node.children[board[i][j]]
+
+            # if trie.search(chars):
+            if node.isEndOfWord:
                 result.add(chars)
-                #return
 
-            
-            # up, down, left, right
-            directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+            dfs(chars, i - 1, j, node)
+            dfs(chars, i + 1, j, node)
+            dfs(chars, i, j - 1, node)
+            dfs(chars, i, j + 1, node)
 
-            for dir in directions:
-                newRowCell = i + dir[0]
-                newColCell = j + dir[1]
+            # backtrackmove previous and try new cell
+            visited.remove((i,j))
 
-                # check for within bounds
-                if (
-                    
-                    (newRowCell >= 0 and newRowCell <= R-1) and 
-                    (newColCell >= 0 and newColCell <= C-1)
-                   ):
-                    
-                    newChar = chars + board[newRowCell][newColCell]
-                    
-                    dfs(newChar, newRowCell, newColCell)
-            
 
         for i in range(R):
             for j in range(C):
@@ -97,9 +93,9 @@ class Solution:
                 if not trie.starts_with(char):
                     continue
                 
-                dfs(char, i, j)
+                dfs('', i, j, trie.root)
                 
-        
+                
         return result
 
 
@@ -113,9 +109,9 @@ class Solution:
 s = Solution()
 
 # expected: []
-print(s.findWords([["a","a"]], ["aaa"]))
+#print(s.findWords([["a","a"]], ["aaa"]))
 
 # expected: ["oa","oaa"]
-#print(s.findWords([["o","a","b","n"],["o","t","a","e"],["a","h","k","r"],["a","f","l","v"]], ["oa","oaa"]))
+print(s.findWords([["o","a","b","n"],["o","t","a","e"],["a","h","k","r"],["a","f","l","v"]], ["oa","oaa"]))
 
-# print(s.findWords([["o","a","a","n"],["e","t","a","e"],["i","h","k","r"],["i","f","l","v"]], ["oath","pea","eat","rain"]))
+print(s.findWords([["o","a","a","n"],["e","t","a","e"],["i","h","k","r"],["i","f","l","v"]], ["oath","pea","eat","rain"]))
