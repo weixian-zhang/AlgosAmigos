@@ -55,7 +55,7 @@ class Trie:
 
 class Solution:
 
-    # prefix tree
+    # prefix tree / Trie
     def suggestedProducts(self, products: List[str], searchWord: str) -> List[List[str]]:
         
         trie = Trie()
@@ -80,6 +80,38 @@ class Solution:
         
         return result
     
+
+    # NeetCode - 2 pointers
+    # since product are sorted, products within left and right must have same prefix
+    def suggestedProducts(self, products: List[str], searchWord: str) -> List[List[str]]:
+        
+        result = []
+        products.sort()
+
+        l, r = 0, len(products) - 1
+
+        for i in range(len(searchWord)):
+            c = searchWord[i]
+
+            # if length of word is within range of SearchWord or the ith char of product is not the same as ith char of SearchWord
+            # means product does not have prefix of search word, then skip to next
+            while l <= r and (len(products[l]) <= i or products[l][i] != c):
+                l += 1
+
+            while l <= r and (len(products[r]) <= i or products[r][i] != c):
+                r -= 1
+
+
+            productsMatchingPrefixes = r - l + 1
+
+            if l <= r:
+                result.append(products[l:min(l + 3, l + productsMatchingPrefixes)])
+            else:
+                result.append([])
+
+        
+        return result
+
 
 s = Solution()
 
