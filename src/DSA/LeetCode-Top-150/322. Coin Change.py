@@ -67,12 +67,12 @@ class Solution:
         dp = [float('inf')] * (amount + 1)
         dp[0] = 0
 
-        for a in range(1, amount + 1):
-            for c in coins:
+        for amt in range(1, amount + 1):
+            for coin in coins:
 
                 # if non negative
-                if c <= a:
-                    dp[a] = min(dp[a], 1 + dp[a - c])
+                if coin <= amt:
+                    dp[amt] = min(dp[amt], 1 + dp[amt - coin])
 
         return dp[amount] if dp[amount] != float('inf') else -1
 
