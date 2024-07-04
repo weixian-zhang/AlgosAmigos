@@ -6,32 +6,39 @@ class Solution:
         R = len(grid) - 1
         C = len(grid[0]) - 1
 
-        minSum = float('inf')
+        dp = {}
 
-        def dfs(row, col, localSum):
-            nonlocal minSum
-            
+        def dfs(row, col):
+
+               
             if row > R or col > C:
-                return
+                return float('inf')
             
+    
             if row == R and col == C:
-                localSum += grid[row][col]
-                minSum = min(minSum, localSum)
-                return
+               return grid[row][col]
             
-
-            localSum += grid[row][col]
+            if (row, col) in dp:
+                return dp[(row, col)]
             
-            dfs(row + 1, col, localSum)
+        
+            currNum = grid[row][col]
 
-            dfs(row, col + 1, localSum)
+            # downSum = dfs(row + 1, col, localSum)
 
-            localSum -= grid[row][col] # backtracking
+            # rightSum = dfs(row, col + 1, localSum)
+
+            # localSum = currNum + min(downSum, rightSum)
+
+            # dp[(row, col)] = localSum
+            
+            dp[(row, col)] = currNum + min(dfs(row + 1, col), dfs(row, col + 1))
+
+            return  dp[(row, col)]
 
 
-        dfs(0, 0, 0)
+        return dfs(0, 0, 0)
 
-        return minSum
 
 
 s = Solution()
