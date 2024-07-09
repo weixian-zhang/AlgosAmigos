@@ -39,7 +39,6 @@ class Solution:
         
         N = len(s)
         longestSoFar = ''
-        dp = {}
 
         def isPalindrome(subStr):
             
@@ -61,9 +60,6 @@ class Solution:
 
             currSubStr = s[i:j + 1]
 
-            # if currSubStr in dp:
-            #     return dp[currSubStr]
-
             # base case
             if j > N - 1 or i > N - 1:
                 return localPalindrome
@@ -79,6 +75,41 @@ class Solution:
             longestSoFar = localPalindrome if len(localPalindrome) > len(longestSoFar) else longestSoFar
 
         return longestSoFar
+
+
+    # foreach char, make it a "middle" char of palindrome
+    def longestPalindrome(self, s: str) -> str:
+
+        
+        N = len(s)
+        result = ''
+        resultLen = 0
+
+        for i in range(len(s)):
+
+            # odd length word
+            left, right = i, i
+
+            while left >= 0 and right <= N - 1 and s[left] == s[right]:
+                if (right - left) + 1 > len(result):
+                    result = s[left: right + 1]
+                
+                left -= 1
+                right += 1
+
+            # even length word
+            left, right = i, i + 1
+            while left >= 0 and right <= N - 1 and s[left] == s[right]:
+                if (right - left) + 1 > len(result):
+                    result = s[left: right + 1]
+                
+                left -= 1
+                right += 1
+
+        
+        return result
+
+
             
 
         
@@ -89,12 +120,12 @@ class Solution:
 
 s = Solution()
 
-# print(s.longestPalindrome('eabcb'))
-# print(s.longestPalindrome('aab'))
-# print(s.longestPalindrome('ac'))
-# print(s.longestPalindrome('cbbd'))
+print(s.longestPalindrome('eabcb')) # bcb
+print(s.longestPalindrome('aab')) # aa
+print(s.longestPalindrome('ac')) # a
+print(s.longestPalindrome('cbbd'))
 print(s.longestPalindrome('babad'))
-# print(s.longestPalindrome('malayalam'))
+print(s.longestPalindrome('malayalam'))
 
 
 
