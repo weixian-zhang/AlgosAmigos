@@ -4,11 +4,8 @@ class Solution:
     def maxProfit(self, prices: List[int]) -> int:
         
         L = len(prices)
-        lowest = prices[0]
         profit = 0
-
         left, right = 0, 1
-
 
         while left != L and right != L:
 
@@ -19,9 +16,8 @@ class Solution:
                 left = right
                 right = left + 1
 
-
         return profit
     
 s = Solution()
-#print(s.maxProfit([7,1,5,3,6,4]))
+print(s.maxProfit([7,1,5,3,6,4]))
 print(s.maxProfit([7,6,4,3,1]))
