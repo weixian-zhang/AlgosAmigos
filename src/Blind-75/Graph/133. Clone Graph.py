@@ -7,16 +7,30 @@ class Node:
 
 from collections import defaultdict
 from typing import Optional
+
 class Solution:
-    def cloneGraph(self, node: Node) -> Node:
-        pass
+    def cloneGraph(self, node: Optional['Node']) -> Optional['Node']:
 
+        if not node:
+            return None
 
-d = {}
-n1 = Node(1)
-n3 = Node(3)
+        old_new = {}
 
-d[n1] = Node(11)
-d[n3] = Node(33)
+        # do dfs on node
+        def dfs(node):
+            if node in old_new:
+                return old_new[node]
 
-print(d[n3].val)
+            copy = Node(node.val)
+            old_new[node] = copy
+
+            for nei in node.neighbors:
+               previously_copied = dfs(nei)
+               copy.neighbors.append(previously_copied)
+
+            return copy
+
+        clone = dfs(node)
+                    
+        # return first item
+        return clone if clone else None
