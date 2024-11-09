@@ -21,7 +21,7 @@ def most_frequent_brute_force(chars):
         for j in range(C):
             if chars[i] == chars[j]:
                 curr += 1
-
+                
         mf = max(mf, curr) 
 
     return mf
