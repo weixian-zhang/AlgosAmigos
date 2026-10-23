@@ -1,0 +1,41 @@
+from collections import defaultdict, deque
+
+class Solution:
+
+    def __init__(self):
+    
+        self.graph = {
+            'a': ['b', 'c'],
+            'b': ['d', 'e', 'f'],
+            'c': ['e'],
+            'd': ['e'],
+            'e': ['d']
+        }
+
+    
+    def bfs(self) -> list[str]:
+
+        start_node = list(self.graph)[0]
+        queue = deque([start_node])
+        visited = [start_node]
+        result = []
+        
+        while queue:
+
+            current = queue.popleft()
+            result.append(current)
+
+            for neighbour in self.graph.get(current, []):
+                if neighbour not in visited:
+                    queue.append(neighbour)
+                    visited.append(neighbour)
+
+        return result
+
+
+s = Solution()
+result = s.bfs()
+print(result)
+
+
+    
