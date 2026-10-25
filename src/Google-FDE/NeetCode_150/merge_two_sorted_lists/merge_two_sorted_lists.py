@@ -26,72 +26,33 @@ class Solution:
 
     def mergeTwoLists(self, list1: ListNode, list2: ListNode):
 
-        if not list1:
-            return list2
-        if not list2:
-            return list1
+        dummy = ListNode()
 
-
+        dummy_curr = dummy
         l1_curr = list1
-
         l2_curr = list2
 
-        while l2_curr:
+        while l1_curr and l2_curr:
 
-            if l2_curr.val < l1_curr.val:
-
-                l2_next = l2_curr.next
-
-                dummy = ListNode(l2_curr.val)
-                dummy.next = l1_curr
-
-                #l2_curr.next = l1_curr
-                
-                l1_curr = dummy
-
-                # move l2 pointer
-                l2_curr = l2_next
-
-            elif l2_curr.val == l1_curr.val:
-                l1_next = l1_curr.next
-
-                l2_next = l2_curr.next
-
-                l1_curr.next = l2_curr
-
-                l2_curr.next = l1_next
-
-                # move l1 pointer to current
+            if l1_curr and l2_curr and l1_curr.val <= l2_curr.val:
+                dummy_curr.next = l1_curr
                 l1_curr = l1_curr.next
 
-                # move l2 pointer to current
-                l2_curr = l2_next
-                
-            else:
-                while l2_curr.val > l1_curr.val and l1_curr.next and l2_curr.val > l1_curr.next.val:
-                    l1_curr = l1_curr.next
-
-                # detach rest of l1
-                l1_next = l1_curr.next
-
-                # detach rest of l2
-                l2_next = l2_curr.next
-
-                l1_curr.next = l2_curr
-
-                l2_curr.next = l1_next
-
-                l1_curr = l1_curr.next
-
-                l2_curr = l2_next
+            else: 
+                dummy_curr.next = l2_curr
+                l2_curr = l2_curr.next
 
 
-        return list1
+            dummy_curr = dummy_curr.next
+
+        dummy_curr.next = l1_curr or l2_curr
+
+        return dummy.next
 
 
 
-l1 = ListNode(2)
-l2 = ListNode(1)
+l1 = ListNode(1, ListNode(1, ListNode(1)))
+l2 = ListNode(4, ListNode(5))
 s = Solution()
 print(s.to_list(s.mergeTwoLists(l1, l2)))
 
@@ -166,3 +127,85 @@ class TestSolution(unittest.TestCase):
     # 1, 5, 10
 
 
+
+
+# if l1_curr.val == l2_curr.val:
+#     dummy_curr.next = l1_curr
+#     dummy_curr.next.next = l2_curr
+
+# elif l1_curr.val < l2_curr:
+
+#     # 3, 5, 6
+#     # 10, 12, 14
+
+#     dummy_curr.next = l1_curr
+#     dummy_curr.next.next = l2_curr
+# else:
+#     dummy_curr.next = l2_curr
+#     dummy_curr.next.next = l1_curr
+
+
+
+# def mergeTwoLists(self, list1: ListNode, list2: ListNode):
+
+#         if not list1:
+#             return list2
+#         if not list2:
+#             return list1
+
+
+#         l1_curr = list1
+
+#         l2_curr = list2
+
+#         while l2_curr:
+
+#             if l2_curr.val < l1_curr.val:
+
+#                 l2_next = l2_curr.next
+
+#                 dummy = ListNode(l2_curr.val)
+#                 dummy.next = l1_curr
+
+#                 #l2_curr.next = l1_curr
+                
+#                 l1_curr = dummy
+
+#                 # move l2 pointer
+#                 l2_curr = l2_next
+
+#             elif l2_curr.val == l1_curr.val:
+#                 l1_next = l1_curr.next
+
+#                 l2_next = l2_curr.next
+
+#                 l1_curr.next = l2_curr
+
+#                 l2_curr.next = l1_next
+
+#                 # move l1 pointer to current
+#                 l1_curr = l1_curr.next
+
+#                 # move l2 pointer to current
+#                 l2_curr = l2_next
+                
+#             else:
+#                 while l2_curr.val > l1_curr.val and l1_curr.next and l2_curr.val > l1_curr.next.val:
+#                     l1_curr = l1_curr.next
+
+#                 # detach rest of l1
+#                 l1_next = l1_curr.next
+
+#                 # detach rest of l2
+#                 l2_next = l2_curr.next
+
+#                 l1_curr.next = l2_curr
+
+#                 l2_curr.next = l1_next
+
+#                 l1_curr = l1_curr.next
+
+#                 l2_curr = l2_next
+
+
+#         return list1
