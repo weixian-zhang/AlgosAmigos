@@ -6,7 +6,7 @@
 
 ---
 
-# Part 1 — Guardrails (the mechanisms)
+# Part 1 — Guardrails
 
 Each guardrail applies one or more policies. See [Part 2](#part-2--policies-the-rules).
 
@@ -109,8 +109,6 @@ Records what the agent and the other guardrails do, so that you can debug, audit
 | Reporting / compliance | Makes governance reports | Blocked requests, data incidents, AI cost, approvals for each month | Run scheduled queries on the log events and show the results on a dashboard. |
 
 ## 8. Miscellaneous
-
-Guardrails that do not fit into the categories above.
 
 | Guardrail | What it does | Example | Simple solution |
 |---|---|---|---|
